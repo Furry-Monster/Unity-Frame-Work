@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 
 public class GameManager : Singleton<GameManager>
 {
@@ -44,15 +45,18 @@ public class GameManager : Singleton<GameManager>
     }
     private void HandleInitializingEnter()
     {
+        //load game data, create player, etc.
+        Singleton<UnitManager>.Instance.SpawnUnit(Singleton<UnitManager>.Instance.unitDict[UnitType.Player]);
+        
         ChangeState(GameState.Running);
     }
     private void HandleRunningEnter()
     {
-        
+
     }
     private void HandlePausedEnter()
     {
-        
+
     }
 
 }

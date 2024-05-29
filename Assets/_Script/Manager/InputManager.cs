@@ -80,6 +80,16 @@ public class InputManager : Singleton<InputManager>
         _slot4Input = inputActions.Player.Slot4.ReadValue<bool>();
     }
 
+    private void ClearEventObserber()
+    {
+        inputActions.Player.Move.performed -= ctx => OnMove?.Invoke();
+        inputActions.Player.Interact.performed -= ctx => OnInteract?.Invoke();
+        inputActions.Player.Drop.performed -= ctx => OnDrop?.Invoke();
+        inputActions.Player.Slot1.performed -= ctx => OnSlot1?.Invoke();
+        inputActions.Player.Slot2.performed -= ctx => OnSlot2?.Invoke();
+        inputActions.Player.Slot3.performed -= ctx => OnSlot3?.Invoke();
+        inputActions.Player.Slot4.performed -= ctx => OnSlot4?.Invoke();
+    }
     #endregion
 
     #region internal methods
@@ -88,10 +98,11 @@ public class InputManager : Singleton<InputManager>
     {
         switch (sender)
         {
-            case Player:
+            case PlayerUnit:
                 inputActions.Player.Enable();
                 break;
             default:
+                InitEventObserver();
                 inputActions.Enable();
                 break;
         }
@@ -101,10 +112,11 @@ public class InputManager : Singleton<InputManager>
     {
         switch (sender)
         {
-            case Player:
+            case PlayerUnit:
                 inputActions.Player.Disable();
                 break;
             default:
+                ClearEventObserber();
                 inputActions.Disable();
                 break;
         }

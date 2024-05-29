@@ -1,7 +1,50 @@
+using System.Collections.Generic;
 using UnityEngine;
+
+public enum UnitType
+{
+    Player,
+    Enemy,
+    NPC,
+    Entity,//for example, a bucket or a chest
+}
+
+[System.Serializable]
+public struct DictionaryUnitElement
+{
+    public UnitType type;
+    public BaseUnitSO unitSO;
+}
 
 public class UnitManager : Singleton<UnitManager>
 {
+    //UnitDict
+    public Dictionary<UnitType, BaseUnitSO> unitDict = new Dictionary<UnitType, BaseUnitSO>();
+    [SerializeField] private List<DictionaryUnitElement> unitDictVisual = new List<DictionaryUnitElement>();
+    //this list is used to make dictionary visible in editor
+    //and it must be serialized to save data,and send data to the real dictionary so that it can be used in game
+    [Space]
+
+    [SerializeField] private Transform defaultParent;
+
+    protected override void Awake()
+    {
+        base.Awake();
+
+        if (defaultParent == null)
+        {
+            defaultParent = GameObject.Find("Environment").GetComponent<Transform>().Find("Units");
+        }
+
+        //load unitDict from visual list
+        foreach (DictionaryUnitElement unitElement in unitDictVisual)
+        {
+            unitDict.Add(unitElement.type, unitElement.unitSO);
+        }
+
+        Debug.Log($"{unitDict.Count} units preloaded successfully");
+    }
+
 
 
     #region UnitCount
@@ -23,21 +66,8 @@ public class UnitManager : Singleton<UnitManager>
 
     #region SpawnUnit
 
-    public void SpawnUnit(BaseUnitSO unit, Vector3 pos, Quaternion rot)
-    {
-        Instantiate(unit.unitPrefab, pos, rot);
-        Debug.Log($"spawn a {unit.unitName} at {pos}");
-    }
-    public void SpawnUnit(BaseUnitSO unit, Vector3 pos)
-    {
-        SpawnUnit(unit, pos, Quaternion.identity);
-    }
-    public void SpawnUnit(BaseUnitSO unit)
-    {
-        SpawnUnit(unit, Vector3.zero, Quaternion.identity);
-    }
-
-
+    //spawn units under a parent
+    //You're suggested to pick a parent under folder "Environment/Units"
     public void SpawnUnitAtTransform(BaseUnitSO unit, Transform parent, Vector3 pos, Quaternion rot)
     {
         GameObject spawnedUnit;
@@ -56,6 +86,38 @@ public class UnitManager : Singleton<UnitManager>
     {
         SpawnUnitAtTransform(unit, parent, Vector3.zero, Quaternion.identity);
     }
+
+    //spawn units under default parent
+    //It's better to use these methods
+    public void SpawnUnit(BaseUnitSO unit)
+    {
+        SpawnUnitAtTransform(unit, defaultParent);
+    }
+    public void SpawnUnit(BaseUnitSO unit, Vector3 pos, Quaternion rot)
+    {
+        SpawnUnitAtTransform(unit, defaultParent, pos, rot);
+    }
+    public void SpawnUnit(BaseUnitSO unit, Vector3 pos)
+    {
+        SpawnUnitAtTransform(unit, defaultParent, pos);
+    }
+
+    //spawn units at worldspace
+    //Better not use these methods
+    public void SpawnUnitAtWorldspace(BaseUnitSO unit, Vector3 pos, Quaternion rot)
+    {
+        Instantiate(unit.unitPrefab, pos, rot);
+        Debug.Log($"spawn a {unit.unitName} at {pos}");
+    }
+    public void SpawnUnitAtWorldspace(BaseUnitSO unit, Vector3 pos)
+    {
+        SpawnUnitAtWorldspace(unit, pos, Quaternion.identity);
+    }
+    public void SpawnUnitAtWorldspace(BaseUnitSO unit)
+    {
+        SpawnUnitAtWorldspace(unit, Vector3.zero, Quaternion.identity);
+    }
+
     #endregion
 
 
