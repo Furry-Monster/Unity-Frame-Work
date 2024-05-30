@@ -4,8 +4,15 @@ public class InventorySystem : Singleton<InventorySystem>
 {
     public InventorySO inventory { get; private set; }
 
-    private void Start()
+    [SerializeField] private string PATH = "ScriptableObjects/Inventory";
+
+    protected override void Awake()
     {
-        inventory = Resources.Load<InventorySO>("ScriptableObjects/Inventory");
+        base.Awake();
+
+        inventory = Resources.Load<InventorySO>(PATH);
+        Debug.Log("inventory data loaded successfully!");
     }
+
+
 }

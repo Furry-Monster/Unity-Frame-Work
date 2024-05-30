@@ -8,6 +8,7 @@ public class InventorySO : ScriptableObject
     [SerializeField] private List<BaseItemSO> items = new List<BaseItemSO>();
     [SerializeField] private int maxItems = 4;
 
+    #region ReusableMethods
     public bool AddItem(BaseItemSO itemToAdd)
     {
         //if there are empty slots, add the item to the first empty slot
@@ -36,7 +37,7 @@ public class InventorySO : ScriptableObject
     {
         if (index < 0 || index >= maxItems)
         {
-            Debug.Log("Invalid index");
+            Debug.LogWarning("Invalid index");
             return false;
         }
 
@@ -76,4 +77,13 @@ public class InventorySO : ScriptableObject
         Debug.Log($"{itemToRemove.name} not found in inventory");
         return false;
     }
+
+    /// <summary>
+    /// Better not calling this methods
+    /// </summary>
+    public void Clear()
+    {
+        items.Clear();
+    }
+    #endregion
 }
