@@ -1,5 +1,5 @@
 public class BaseItem
 {
-    public BaseItemSO itemData { get; private set; }
+    public ItemSO itemData { get; private set; }
 
 }

@@ -15,6 +15,15 @@
                     "initialStateCheck": true
                 },
                 {
+                    "name": "LocomotionToggle",
+                    "type": "PassThrough",
+                    "id": "9fa46f32-ab74-478c-ba85-4a95a8d93f5c",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Interact",
                     "type": "Button",
                     "id": "ecfdee43-0db7-48a0-a253-9a59074433b6",
@@ -188,6 +197,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Slot4",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b2c9fcf2-06e5-4d25-a41f-21461c82690e",
+                    "path": "<Keyboard>/leftShift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LocomotionToggle",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

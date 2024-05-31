@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New BaseItem", menuName = "ScriptableObjects/BaseItem")]
-public class BaseItemSO : ScriptableObject
+[CreateAssetMenu(fileName = "New Item", menuName = "ScriptableObjects/ItemSO/BaseItem")]
+public class ItemSO : ScriptableObject
 {
     [Header("text info")]
     public string itemName;

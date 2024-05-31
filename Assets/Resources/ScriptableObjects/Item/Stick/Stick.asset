@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4318bc1a20cb80343ba7f2a3f2220330, type: 3}
+  m_Name: Stick
+  m_EditorClassIdentifier: 
+  itemName: Stick
+  itemID: 1
+  itemDescription: A stick,so ordinary it is that could be found anywhere.
+  itemIcon: {fileID: 0}
+  itemPrefab: {fileID: 0}
+  itemValue: 5
+  itemWeight: 1
+  decoratorSO:
+  - {fileID: 11400000, guid: 34c8911bf7738ea47a67f5188d53eb42, type: 2}
+  - {fileID: 11400000, guid: e98574699539803498a188269884baf1, type: 2}

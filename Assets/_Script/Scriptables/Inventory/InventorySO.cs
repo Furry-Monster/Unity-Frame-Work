@@ -5,11 +5,11 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Inventory", menuName = "ScriptableObjects/Inventory")]
 public class InventorySO : ScriptableObject
 {
-    [SerializeField] private List<BaseItemSO> items = new List<BaseItemSO>();
+    [SerializeField] private List<ItemSO> items = new List<ItemSO>();
     [SerializeField] private int maxItems = 4;
 
     #region ReusableMethods
-    public bool AddItem(BaseItemSO itemToAdd)
+    public bool AddItem(ItemSO itemToAdd)
     {
         //if there are empty slots, add the item to the first empty slot
         for (int i = 0; i < items.Count; i++)
@@ -33,7 +33,7 @@ public class InventorySO : ScriptableObject
         return false;
     }
 
-    public bool AddItem(BaseItemSO itemToAdd, int index)
+    public bool AddItem(ItemSO itemToAdd, int index)
     {
         if (index < 0 || index >= maxItems)
         {
@@ -63,7 +63,7 @@ public class InventorySO : ScriptableObject
         return false;
     }
 
-    public bool RemoveItem(BaseItemSO itemToRemove)
+    public bool RemoveItem(ItemSO itemToRemove)
     {
         for (int i = 0; i < items.Count; i++)
         {

@@ -1,39 +1,60 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerUnit : BaseUnit
 {
-    private InputManager input;
-
-    private void Awake()
+    //Data
+    internal PlayerUnitSO data
     {
+        get
+        {
+            return unitData as PlayerUnitSO;
+        }
+    }
+
+    //components
+    [SerializeField] public Rigidbody rb;
+
+    //FSMs
+    private PlayerStateMachine playerFSM;
+
+
+    #region Main Methods
+    protected override void Awake()
+    {
+        base.Awake();
+
         Debug.Log("PlayerUnit spawned");
-        input = Singleton<InputManager>.Instance;
+
+        //set components
+        rb = GetComponent<Rigidbody>();
+
+        //init FSMs
+        playerFSM = new PlayerStateMachine(this);
     }
 
-    private void OnEnable()
-    {
-        input.EnableInput(this);
-    }
+    private void OnEnable() => Singleton<InputManager>.Instance?.EnableInput(this);
 
-    private void OnDisable()
-    {
-        input.DisableInput(this);
-    }
+    private void OnDisable() => Singleton<InputManager>.Instance?.DisableInput(this);
 
     private void Start()
     {
-        
+        //kick off the FSM
+        playerFSM.ChangeState(playerFSM.states[PlayerState.Idle]);
     }
 
     private void Update()
     {
-        
+        //firstly check if there is any transision in FSM;
+        playerFSM.HandleInput();
+
+        //then update the FSM
+        playerFSM.UpdateStateMachine();
     }
 
     private void FixedUpdate()
     {
-        
+        playerFSM.FixedUpdateStateMachine();
     }
+
+    #endregion
 }

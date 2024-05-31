@@ -12,9 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2960964cc30c1af409b8c33cce9a6983, type: 3}
   m_Name: Player
   m_EditorClassIdentifier: 
-  unitName: FurryMonster
+  unitName: Player
   unitID: 0
   unitDescription: Super Administrator!!!!
   unitIcon: {fileID: 0}
   unitPrefab: {fileID: 1203365419481262694, guid: 9f5b6ae5034fa7344ac79047b0600101,
     type: 3}
+  maxHealth: 100
+  walkSpeed: 10
+  runSpeed: 20
+  acceleration: 16
+  decceleration: 14
+  turnSpeed: 100
