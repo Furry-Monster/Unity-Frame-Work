@@ -22,10 +22,10 @@ public class InputManager : Singleton<InputManager>
     public event Action OnLocomotionToggle;
     public event Action OnInteract;
     public event Action OnDrop;
-    public event Action OnSlot0;
-    public event Action OnSlot1;
-    public event Action OnSlot2;
-    public event Action OnSlot3;
+    public event Action<int> OnSlot0;
+    public event Action<int> OnSlot1;
+    public event Action<int> OnSlot2;
+    public event Action<int> OnSlot3;
 
     //player input properties
     public Vector2 moveInput { get => _moveInput; }
@@ -67,10 +67,10 @@ public class InputManager : Singleton<InputManager>
         inputActions.Player.LocomotionToggle.performed += ctx => OnLocomotionToggle?.Invoke();
         inputActions.Player.Interact.performed += ctx => OnInteract?.Invoke();
         inputActions.Player.Drop.performed += ctx => OnDrop?.Invoke();
-        inputActions.Player.Slot0.performed += ctx => OnSlot0?.Invoke();
-        inputActions.Player.Slot1.performed += ctx => OnSlot1?.Invoke();
-        inputActions.Player.Slot2.performed += ctx => OnSlot2?.Invoke();
-        inputActions.Player.Slot3.performed += ctx => OnSlot3?.Invoke();
+        inputActions.Player.Slot0.performed += ctx => OnSlot0?.Invoke(0);
+        inputActions.Player.Slot1.performed += ctx => OnSlot1?.Invoke(1);
+        inputActions.Player.Slot2.performed += ctx => OnSlot2?.Invoke(2);
+        inputActions.Player.Slot3.performed += ctx => OnSlot3?.Invoke(3);
     }
 
     private void CacheInputs()
@@ -91,10 +91,10 @@ public class InputManager : Singleton<InputManager>
         inputActions.Player.LocomotionToggle.performed -= ctx => OnLocomotionToggle?.Invoke();
         inputActions.Player.Interact.performed -= ctx => OnInteract?.Invoke();
         inputActions.Player.Drop.performed -= ctx => OnDrop?.Invoke();
-        inputActions.Player.Slot1.performed -= ctx => OnSlot1?.Invoke();
-        inputActions.Player.Slot2.performed -= ctx => OnSlot2?.Invoke();
-        inputActions.Player.Slot3.performed -= ctx => OnSlot3?.Invoke();
-        inputActions.Player.Slot0.performed -= ctx => OnSlot0?.Invoke();
+        inputActions.Player.Slot1.performed -= ctx => OnSlot1?.Invoke(0);
+        inputActions.Player.Slot2.performed -= ctx => OnSlot2?.Invoke(1);
+        inputActions.Player.Slot3.performed -= ctx => OnSlot3?.Invoke(2);
+        inputActions.Player.Slot0.performed -= ctx => OnSlot0?.Invoke(3);
     }
     #endregion
 

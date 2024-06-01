@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Windows;
 
 public class InventorySystem : Singleton<InventorySystem>
 {
@@ -8,8 +9,9 @@ public class InventorySystem : Singleton<InventorySystem>
     [SerializeField] private string PATH = "ScriptableObjects/Inventory";
 
     //events
-    public event Action OnInvenoryChanged;
+    public event Action OnInvenoryChanged;//called when the inventory is changed(eg. add or remove item)
 
+    public event Action<int> OnSelectedSlotChanged;//called when select a new slot
 
     protected override void Awake()
     {
@@ -17,6 +19,8 @@ public class InventorySystem : Singleton<InventorySystem>
 
         inventory = Resources.Load<InventorySO>(PATH);
         Debug.Log("inventory data loaded successfully!");
+
+        AddListeners();
     }
 
     #region internal
@@ -50,6 +54,21 @@ public class InventorySystem : Singleton<InventorySystem>
         {
             OnInvenoryChanged?.Invoke();
         }
+    }
+    #endregion
+
+    #region Reusable
+    private void AddListeners()
+    {
+        Singleton<InputManager>.Instance.OnSlot0 += OnSlotChanged;
+        Singleton<InputManager>.Instance.OnSlot1 += OnSlotChanged;
+        Singleton<InputManager>.Instance.OnSlot2 += OnSlotChanged;
+        Singleton<InputManager>.Instance.OnSlot3 += OnSlotChanged;
+    }
+
+    private void OnSlotChanged(int slotIndex)
+    {
+        OnSelectedSlotChanged?.Invoke(slotIndex);
     }
     #endregion
 }

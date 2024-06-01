@@ -17,7 +17,6 @@ public class PlayerUnit : BaseUnit
     //FSMs
     private PlayerStateMachine playerFSM;
 
-
     #region Main Methods
     protected override void Awake()
     {

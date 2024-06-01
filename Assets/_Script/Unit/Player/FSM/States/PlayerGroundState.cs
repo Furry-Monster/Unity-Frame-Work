@@ -1,4 +1,5 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -25,12 +26,12 @@ public class PlayerGroundState : IState
     {
         playerStateMachine.shouldRun = input.locomotionToggleInput;
 
-
+        
     }
 
     public virtual void OnUpdate()
     {
-
+        
     }
 
     public virtual void OnFixedUpdate()
@@ -48,6 +49,8 @@ public class PlayerGroundState : IState
     #endregion
 
     #region ReusableMethods
-
+    
     #endregion
+
+
 }
