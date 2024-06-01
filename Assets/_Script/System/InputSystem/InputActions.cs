@@ -64,7 +64,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Slot1"",
+                    ""name"": ""Slot0"",
                     ""type"": ""Button"",
                     ""id"": ""1b9ee938-72c6-41af-aa00-6a97d8beb6c8"",
                     ""expectedControlType"": ""Button"",
@@ -73,7 +73,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Slot2"",
+                    ""name"": ""Slot1"",
                     ""type"": ""Button"",
                     ""id"": ""eee2774c-e2f6-4d5c-a66b-406f3a24841f"",
                     ""expectedControlType"": ""Button"",
@@ -82,7 +82,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Slot3"",
+                    ""name"": ""Slot2"",
                     ""type"": ""Button"",
                     ""id"": ""3cfbd30c-d0b7-415b-a22a-6033219d883c"",
                     ""expectedControlType"": ""Button"",
@@ -91,7 +91,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Slot4"",
+                    ""name"": ""Slot3"",
                     ""type"": ""Button"",
                     ""id"": ""f95fd559-33d1-49c6-9988-b673a8f00c1c"",
                     ""expectedControlType"": ""Button"",
@@ -185,7 +185,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Slot1"",
+                    ""action"": ""Slot0"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -196,7 +196,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Slot2"",
+                    ""action"": ""Slot1"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -207,7 +207,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Slot3"",
+                    ""action"": ""Slot2"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -218,7 +218,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Slot4"",
+                    ""action"": ""Slot3"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -244,10 +244,10 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         m_Player_LocomotionToggle = m_Player.FindAction("LocomotionToggle", throwIfNotFound: true);
         m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
         m_Player_Drop = m_Player.FindAction("Drop", throwIfNotFound: true);
+        m_Player_Slot0 = m_Player.FindAction("Slot0", throwIfNotFound: true);
         m_Player_Slot1 = m_Player.FindAction("Slot1", throwIfNotFound: true);
         m_Player_Slot2 = m_Player.FindAction("Slot2", throwIfNotFound: true);
         m_Player_Slot3 = m_Player.FindAction("Slot3", throwIfNotFound: true);
-        m_Player_Slot4 = m_Player.FindAction("Slot4", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -313,10 +313,10 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_LocomotionToggle;
     private readonly InputAction m_Player_Interact;
     private readonly InputAction m_Player_Drop;
+    private readonly InputAction m_Player_Slot0;
     private readonly InputAction m_Player_Slot1;
     private readonly InputAction m_Player_Slot2;
     private readonly InputAction m_Player_Slot3;
-    private readonly InputAction m_Player_Slot4;
     public struct PlayerActions
     {
         private @InputActions m_Wrapper;
@@ -325,10 +325,10 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         public InputAction @LocomotionToggle => m_Wrapper.m_Player_LocomotionToggle;
         public InputAction @Interact => m_Wrapper.m_Player_Interact;
         public InputAction @Drop => m_Wrapper.m_Player_Drop;
+        public InputAction @Slot0 => m_Wrapper.m_Player_Slot0;
         public InputAction @Slot1 => m_Wrapper.m_Player_Slot1;
         public InputAction @Slot2 => m_Wrapper.m_Player_Slot2;
         public InputAction @Slot3 => m_Wrapper.m_Player_Slot3;
-        public InputAction @Slot4 => m_Wrapper.m_Player_Slot4;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -350,6 +350,9 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
             @Drop.started += instance.OnDrop;
             @Drop.performed += instance.OnDrop;
             @Drop.canceled += instance.OnDrop;
+            @Slot0.started += instance.OnSlot0;
+            @Slot0.performed += instance.OnSlot0;
+            @Slot0.canceled += instance.OnSlot0;
             @Slot1.started += instance.OnSlot1;
             @Slot1.performed += instance.OnSlot1;
             @Slot1.canceled += instance.OnSlot1;
@@ -359,9 +362,6 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
             @Slot3.started += instance.OnSlot3;
             @Slot3.performed += instance.OnSlot3;
             @Slot3.canceled += instance.OnSlot3;
-            @Slot4.started += instance.OnSlot4;
-            @Slot4.performed += instance.OnSlot4;
-            @Slot4.canceled += instance.OnSlot4;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -378,6 +378,9 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
             @Drop.started -= instance.OnDrop;
             @Drop.performed -= instance.OnDrop;
             @Drop.canceled -= instance.OnDrop;
+            @Slot0.started -= instance.OnSlot0;
+            @Slot0.performed -= instance.OnSlot0;
+            @Slot0.canceled -= instance.OnSlot0;
             @Slot1.started -= instance.OnSlot1;
             @Slot1.performed -= instance.OnSlot1;
             @Slot1.canceled -= instance.OnSlot1;
@@ -387,9 +390,6 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
             @Slot3.started -= instance.OnSlot3;
             @Slot3.performed -= instance.OnSlot3;
             @Slot3.canceled -= instance.OnSlot3;
-            @Slot4.started -= instance.OnSlot4;
-            @Slot4.performed -= instance.OnSlot4;
-            @Slot4.canceled -= instance.OnSlot4;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -413,9 +413,9 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         void OnLocomotionToggle(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
         void OnDrop(InputAction.CallbackContext context);
+        void OnSlot0(InputAction.CallbackContext context);
         void OnSlot1(InputAction.CallbackContext context);
         void OnSlot2(InputAction.CallbackContext context);
         void OnSlot3(InputAction.CallbackContext context);
-        void OnSlot4(InputAction.CallbackContext context);
     }
 }

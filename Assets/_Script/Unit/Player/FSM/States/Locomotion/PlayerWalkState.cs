@@ -1,18 +1,22 @@
 using UnityEngine;
-public class PlayerRunState : PlayerBaseState
+public class PlayerWalkState : PlayerGroundState
 {
+    
     //cache
     private Vector2 _moveInput;
     private float _targetSpeed;
     private float _currentSpeed;
+    private Vector3 _targetRotation;
+    private Vector3 _currentRotation;
 
-    public PlayerRunState(PlayerStateMachine playerStateMachine):base(playerStateMachine)
+    public PlayerWalkState(PlayerStateMachine playerStateMachine):base(playerStateMachine)
     {
-        
     }
 
     public override void OnEnter()
     {
+        base.OnEnter();
+
         _currentSpeed = rigidbody.velocity.magnitude;
     }
 
@@ -23,22 +27,26 @@ public class PlayerRunState : PlayerBaseState
         _moveInput = input.moveInput;
 
         ToIdle();
-        ToWalk();
+        ToRun();
     }
 
     public override void OnUpdate()
     {
+        base.OnUpdate();
 
+        Rotate();
     }
 
     public override void OnFixedUpdate()
     {
+        base.OnFixedUpdate();
+
         Move();
     }
 
     public override void OnExit()
     {
-
+        base.OnExit();
     }
 
     #region Transitions
@@ -50,22 +58,24 @@ public class PlayerRunState : PlayerBaseState
         }
     }
 
-    private void ToWalk()
+    private void ToRun()
     {
-        if (!playerStateMachine.shouldRun)
+        if (playerStateMachine.shouldRun)
         {
-            playerStateMachine.ChangeState(playerStateMachine.states[PlayerState.Walk]);
+            playerStateMachine.ChangeState(playerStateMachine.states[PlayerState.Run]);
         }
     }
     #endregion
 
     #region ReusableMethods
+
     private void Move()
     {
-        Vector3 _moveDir = new Vector3(_moveInput.x, 0, _moveInput.y);
+        Vector3 _moveDir = new Vector3(_moveInput.x, 0, _moveInput.y);        
+        
         if (_moveInput.magnitude > 0.1f)
         {
-            _targetSpeed = playerData.runSpeed;
+            _targetSpeed = playerData.walkSpeed;
             _currentSpeed = Mathf.Lerp(_currentSpeed, _targetSpeed, Time.deltaTime * playerData.acceleration);
         }
         else
@@ -75,6 +85,19 @@ public class PlayerRunState : PlayerBaseState
         }
 
         rigidbody.velocity = _currentSpeed * _moveDir;
+    }
+
+    private void Rotate()
+    {
+        Vector3 _moveDir = new Vector3(_moveInput.x, 0, _moveInput.y);
+        
+        if(_moveDir != Vector3.zero)
+        {
+            _targetRotation = _moveDir;
+            _currentRotation = Vector3.Lerp(_currentRotation, _targetRotation, Time.deltaTime * playerData.turnSpeed);
+        }
+
+        playerStateMachine.player.transform.forward = _currentRotation;
     }
     #endregion
 }

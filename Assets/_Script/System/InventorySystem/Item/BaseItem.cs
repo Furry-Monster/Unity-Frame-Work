@@ -1,5 +1,11 @@
+using System.Collections.Generic;
+using UnityEngine;
+
+
 public class BaseItem
 {
-    public ItemSO itemData { get; private set; }
+    public ItemSO basicData { get; private set; }
 
+    [Header("Extend Datas")]
+    public List<BaseExtendsSO> extendsDatas = new List<BaseExtendsSO>();
 }

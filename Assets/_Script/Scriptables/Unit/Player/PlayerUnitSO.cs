@@ -12,7 +12,11 @@ public class PlayerUnitSO : BaseUnitSO
     public float runSpeed;
     public float acceleration;
     public float decceleration;
-
+    [Space]
     public float turnSpeed;
+
+    [Header("Player Interaction")]
+    public float interactionDistance;
+    public LayerMask interactLayer;
 }
 

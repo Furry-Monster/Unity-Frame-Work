@@ -85,5 +85,21 @@ public class InventorySO : ScriptableObject
     {
         items.Clear();
     }
+
+    public ItemSO GetItem(int index)
+    {
+        if (index < 0 || index >= maxItems)
+        {
+            Debug.LogWarning("Invalid index in GetItem method");
+            return null;
+        }
+
+        return items[index];
+    }
+
+    public List<ItemSO> GetItems()
+    {
+        return items;
+    }
     #endregion
 }

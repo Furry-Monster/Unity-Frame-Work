@@ -1,5 +1,5 @@
 using UnityEngine;
-public class PlayerIdleState : PlayerBaseState
+public class PlayerIdleState : PlayerGroundState
 {
     //cache
     private Vector2 _moveInput;
@@ -10,6 +10,8 @@ public class PlayerIdleState : PlayerBaseState
 
     public override void OnEnter()
     {
+        base.OnEnter();
+
         ResetVelocity();
     }
 
@@ -26,17 +28,17 @@ public class PlayerIdleState : PlayerBaseState
 
     public override void OnUpdate()
     {
-
+        base.OnUpdate();
     }
 
     public override void OnFixedUpdate()
     {
-
+        base.OnFixedUpdate();
     }
 
     public override void OnExit()
     {
-
+        base.OnExit();
     }
 
     #region Transitions

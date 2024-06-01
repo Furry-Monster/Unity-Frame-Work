@@ -1,6 +1,8 @@
+using System;
 using UnityEngine;
+using UnityEngine.UIElements;
 
-public class PlayerBaseState : IState
+public class PlayerGroundState : IState
 {
     //ref
     protected PlayerUnitSO playerData => playerStateMachine.player.data;
@@ -9,20 +11,20 @@ public class PlayerBaseState : IState
 
 
     protected PlayerStateMachine playerStateMachine;
-
-    public PlayerBaseState(PlayerStateMachine playerStateMachine)
+    public PlayerGroundState(PlayerStateMachine playerStateMachine)
     {
         this.playerStateMachine = playerStateMachine;
     }
 
     public virtual void OnEnter()
     {
-
+        
     }
 
     public virtual void HandleInput()
     {
         playerStateMachine.shouldRun = input.locomotionToggleInput;
+
 
     }
 
@@ -40,4 +42,12 @@ public class PlayerBaseState : IState
     {
 
     }
+
+    #region Transitions
+
+    #endregion
+
+    #region ReusableMethods
+
+    #endregion
 }

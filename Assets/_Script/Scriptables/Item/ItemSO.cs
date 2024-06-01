@@ -19,7 +19,4 @@ public class ItemSO : ScriptableObject
     [Header("data info")]
     public int itemValue;
     public float itemWeight;
-
-    [Header("Extends info")]
-    public List<BaseExtendsSO> decoratorSO = new List<BaseExtendsSO>();
 }

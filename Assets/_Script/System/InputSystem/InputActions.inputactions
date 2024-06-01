@@ -42,7 +42,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Slot1",
+                    "name": "Slot0",
                     "type": "Button",
                     "id": "1b9ee938-72c6-41af-aa00-6a97d8beb6c8",
                     "expectedControlType": "Button",
@@ -51,7 +51,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Slot2",
+                    "name": "Slot1",
                     "type": "Button",
                     "id": "eee2774c-e2f6-4d5c-a66b-406f3a24841f",
                     "expectedControlType": "Button",
@@ -60,7 +60,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Slot3",
+                    "name": "Slot2",
                     "type": "Button",
                     "id": "3cfbd30c-d0b7-415b-a22a-6033219d883c",
                     "expectedControlType": "Button",
@@ -69,7 +69,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Slot4",
+                    "name": "Slot3",
                     "type": "Button",
                     "id": "f95fd559-33d1-49c6-9988-b673a8f00c1c",
                     "expectedControlType": "Button",
@@ -163,7 +163,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Slot1",
+                    "action": "Slot0",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -174,7 +174,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Slot2",
+                    "action": "Slot1",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -185,7 +185,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Slot3",
+                    "action": "Slot2",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -196,7 +196,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Slot4",
+                    "action": "Slot3",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

@@ -1,30 +1,31 @@
-public class PlayerDeadState : PlayerBaseState
+public class PlayerDeadState : IState
 { 
-    public PlayerDeadState(PlayerStateMachine playerStateMachine):base(playerStateMachine)
+    protected PlayerStateMachine playerStateMachine;
+    public PlayerDeadState(PlayerStateMachine playerStateMachine)
     {
     }
 
-    public override void OnEnter()
+    public  void OnEnter()
     {
-
+       
     }
 
-    public override void HandleInput()
-    {
-        base.HandleInput();
-    }
-
-    public override void OnUpdate()
+    public  void HandleInput()
     {
 
     }
 
-    public override void OnFixedUpdate()
+    public  void OnUpdate()
     {
 
     }
 
-    public override void OnExit()
+    public  void OnFixedUpdate()
+    {
+
+    }
+
+    public  void OnExit()
     {
 
     }

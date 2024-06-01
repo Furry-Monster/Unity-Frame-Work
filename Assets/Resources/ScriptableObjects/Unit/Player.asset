@@ -19,8 +19,12 @@ MonoBehaviour:
   unitPrefab: {fileID: 1203365419481262694, guid: 9f5b6ae5034fa7344ac79047b0600101,
     type: 3}
   maxHealth: 100
-  walkSpeed: 10
-  runSpeed: 20
-  acceleration: 16
-  decceleration: 14
-  turnSpeed: 100
+  walkSpeed: 8
+  runSpeed: 12
+  acceleration: 10
+  decceleration: 8
+  turnSpeed: 10
+  interactionDistance: 3
+  interactLayer:
+    serializedVersion: 2
+    m_Bits: 64
