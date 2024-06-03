@@ -45,8 +45,92 @@ public class UnitManager : Singleton<UnitManager>
         Debug.Log($"{unitDict.Count} units preloaded successfully");
     }
 
+    
+    //CRUD(Create,Read,Update,Delete)
+    
 
+    //Internal
+    #region SpawnUnit
+    //spawn units under a parent
+    //You're suggested to pick a parent under folder "Environment/Units"
+    internal void SpawnUnitAtTransform(BaseUnitSO unit, Transform parent, Vector3 pos, Quaternion rot)
+    {
+        GameObject spawnedUnit;
+        spawnedUnit = Instantiate(unit.unitPrefab, parent);
 
+        spawnedUnit.transform.position = pos;
+        spawnedUnit.transform.rotation = rot;
+
+        Debug.Log($"spawn a {unit.unitName} under {parent.name}");
+    }
+    internal void SpawnUnitAtTransform(BaseUnitSO unit, Transform parent, Vector3 pos)
+    {
+        SpawnUnitAtTransform(unit, parent, pos, Quaternion.identity);
+    }
+    internal void SpawnUnitAtTransform(BaseUnitSO unit, Transform parent)
+    {
+        SpawnUnitAtTransform(unit, parent, Vector3.zero, Quaternion.identity);
+    }
+
+    //spawn units under default parent
+    //It's better to use these methods
+    internal void SpawnUnit(BaseUnitSO unit)
+    {
+        SpawnUnitAtTransform(unit, defaultParent);
+    }
+    internal void SpawnUnit(BaseUnitSO unit, Vector3 pos, Quaternion rot)
+    {
+        SpawnUnitAtTransform(unit, defaultParent, pos, rot);
+    }
+    internal void SpawnUnit(BaseUnitSO unit, Vector3 pos)
+    {
+        SpawnUnitAtTransform(unit, defaultParent, pos);
+    }
+
+    //spawn units at worldspace
+    //Better not use these methods
+    internal void SpawnUnitAtWorldspace(BaseUnitSO unit, Vector3 pos, Quaternion rot)
+    {
+        Instantiate(unit.unitPrefab, pos, rot);
+        Debug.Log($"spawn a {unit.unitName} at {pos}");
+    }
+    internal void SpawnUnitAtWorldspace(BaseUnitSO unit, Vector3 pos)
+    {
+        SpawnUnitAtWorldspace(unit, pos, Quaternion.identity);
+    }
+    internal void SpawnUnitAtWorldspace(BaseUnitSO unit)
+    {
+        SpawnUnitAtWorldspace(unit, Vector3.zero, Quaternion.identity);
+    }
+
+    #endregion
+    #region ClearUnit
+
+    internal void ClearUnitsInType<T>() where T : BaseUnit
+    {
+        T[] units = FindObjectsOfType<T>();
+
+        foreach (T unitInstance in units)
+        {
+            Destroy(unitInstance.gameObject);
+        }
+    }
+
+    /// <summary>
+    /// Be careful when using this function, it will destroy all units in the scene.
+    /// </summary>
+    internal void ClearAllUnitsInScene()
+    {
+        BaseUnit[] units = FindObjectsOfType<BaseUnit>();
+
+        foreach (BaseUnit unitInstance in units)
+        {
+            Destroy(unitInstance.gameObject);
+        }
+    }
+    #endregion
+
+    //Utilities
     #region UnitCount
     public int CountUnitInType<T>() where T : BaseUnit
     {
@@ -60,90 +144,6 @@ public class UnitManager : Singleton<UnitManager>
         BaseUnit[] units = FindObjectsOfType<BaseUnit>();
 
         return units.Length;
-    }
-    #endregion
-
-
-    #region SpawnUnit
-
-    //spawn units under a parent
-    //You're suggested to pick a parent under folder "Environment/Units"
-    public void SpawnUnitAtTransform(BaseUnitSO unit, Transform parent, Vector3 pos, Quaternion rot)
-    {
-        GameObject spawnedUnit;
-        spawnedUnit = Instantiate(unit.unitPrefab, parent);
-
-        spawnedUnit.transform.position = pos;
-        spawnedUnit.transform.rotation = rot;
-
-        Debug.Log($"spawn a {unit.unitName} under {parent.name}");
-    }
-    public void SpawnUnitAtTransform(BaseUnitSO unit, Transform parent, Vector3 pos)
-    {
-        SpawnUnitAtTransform(unit, parent, pos, Quaternion.identity);
-    }
-    public void SpawnUnitAtTransform(BaseUnitSO unit, Transform parent)
-    {
-        SpawnUnitAtTransform(unit, parent, Vector3.zero, Quaternion.identity);
-    }
-
-    //spawn units under default parent
-    //It's better to use these methods
-    public void SpawnUnit(BaseUnitSO unit)
-    {
-        SpawnUnitAtTransform(unit, defaultParent);
-    }
-    public void SpawnUnit(BaseUnitSO unit, Vector3 pos, Quaternion rot)
-    {
-        SpawnUnitAtTransform(unit, defaultParent, pos, rot);
-    }
-    public void SpawnUnit(BaseUnitSO unit, Vector3 pos)
-    {
-        SpawnUnitAtTransform(unit, defaultParent, pos);
-    }
-
-    //spawn units at worldspace
-    //Better not use these methods
-    public void SpawnUnitAtWorldspace(BaseUnitSO unit, Vector3 pos, Quaternion rot)
-    {
-        Instantiate(unit.unitPrefab, pos, rot);
-        Debug.Log($"spawn a {unit.unitName} at {pos}");
-    }
-    public void SpawnUnitAtWorldspace(BaseUnitSO unit, Vector3 pos)
-    {
-        SpawnUnitAtWorldspace(unit, pos, Quaternion.identity);
-    }
-    public void SpawnUnitAtWorldspace(BaseUnitSO unit)
-    {
-        SpawnUnitAtWorldspace(unit, Vector3.zero, Quaternion.identity);
-    }
-
-    #endregion
-
-
-    #region ClearUnit
-
-    public void ClearUnitsInType<T>() where T : BaseUnit
-    {
-        T[] units = FindObjectsOfType<T>();
-
-        foreach (T unitInstance in units)
-        {
-            Destroy(unitInstance.gameObject);
-        }
-    }
-
-    /// <summary>
-    /// Be careful when using this function, it will destroy all units in the scene.
-    /// </summary>
-    public void ClearAllUnitsInScene()
-    {
-        BaseUnit[] units = FindObjectsOfType<BaseUnit>();
-
-        foreach (BaseUnit unitInstance in units)
-        {
-            Destroy(unitInstance.gameObject);
-        }
     }
     #endregion
 }

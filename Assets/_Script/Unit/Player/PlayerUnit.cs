@@ -31,9 +31,9 @@ public class PlayerUnit : BaseUnit
         playerFSM = new PlayerStateMachine(this);
     }
 
-    private void OnEnable() => Singleton<InputManager>.Instance?.EnableInput(this);
+    //private void OnEnable() => Singleton<InputManager>.Instance?.EnableInput(this);
 
-    private void OnDisable() => Singleton<InputManager>.Instance?.DisableInput(this);
+    //private void OnDisable() => Singleton<InputManager>.Instance?.DisableInput(this);
 
     private void Start()
     {

@@ -1,9 +1,17 @@
 using System;
 using UnityEngine;
 
+public enum InputType
+{
+    Player,
+    UI
+}
+
 public class InputManager : Singleton<InputManager>
 {
     private InputActions inputActions;
+
+    public InputType currentInputType { get; private set; }
 
     #region Player input;
 
@@ -16,6 +24,7 @@ public class InputManager : Singleton<InputManager>
     private bool _slot1Input;
     private bool _slot2Input;
     private bool _slot3Input;
+    private bool _pauseInput;
 
     //player input observers
     public event Action OnMove;
@@ -26,6 +35,7 @@ public class InputManager : Singleton<InputManager>
     public event Action<int> OnSlot1;
     public event Action<int> OnSlot2;
     public event Action<int> OnSlot3;
+    public event Action OnPause;
 
     //player input properties
     public Vector2 moveInput { get => _moveInput; }
@@ -36,6 +46,26 @@ public class InputManager : Singleton<InputManager>
     public bool slot1Input { get => _slot1Input; }
     public bool slot2Input { get => _slot2Input; }
     public bool slot3Input { get => _slot3Input; }
+    public bool pauseInput { get => _pauseInput; }
+    #endregion
+
+    #region UI input
+
+    //ui cached input
+    private bool _clickLeftInput;
+    private bool _clickRightInput;
+    private bool _exitInput;
+
+    //ui input observers
+    public event Action OnClickLeft;
+    public event Action OnClickRight;
+    public event Action OnExit;
+
+    //ui input properties
+    public bool clickLeftInput { get => _clickLeftInput; }
+    public bool clickRightInput { get => _clickRightInput; }
+    public bool exitInput { get => _exitInput; }
+
     #endregion
 
     protected override void Awake()
@@ -46,12 +76,6 @@ public class InputManager : Singleton<InputManager>
         {
             inputActions = new InputActions();
         }
-
-    }
-
-    private void Start()
-    {
-        InitEventObserver();
     }
 
     private void Update()
@@ -59,9 +83,85 @@ public class InputManager : Singleton<InputManager>
         CacheInputs();
     }
 
-    #region MainMethods
 
-    private void InitEventObserver()
+    #region Internal Methods
+
+    public void ChangeInputType(InputType inputType)
+    {
+        ClearObservers();
+
+        currentInputType = inputType;
+
+        switch (inputType)
+        {
+            case InputType.Player:
+                inputActions.Player.Enable();
+                break;
+            case InputType.UI:
+                inputActions.UI.Enable();
+                break;
+            default:
+                Debug.LogError("Invalid input type");
+                break;
+        }
+
+        InitObserver();
+    }
+    #endregion
+
+    #region Reusable methods
+    private void InitObserver()
+    {
+        switch (currentInputType)
+        {
+            case InputType.Player:
+                InitPlayerObserver();
+                break;
+            case InputType.UI:
+                InitUIObserver();
+                break;
+            default:
+                Debug.LogError("Invalid input type");
+                break;
+        }
+    }
+
+    private void CacheInputs()
+    {
+        switch (currentInputType)
+        {
+            case InputType.Player:
+                CachePlayerInputs();
+                break;
+            case InputType.UI:
+                CacheUIInputs();
+                break;
+            default:
+                Debug.LogError("Invalid input type");
+                break;
+        }
+    }
+
+    private void ClearObservers()
+    {
+        switch (currentInputType)
+        {
+            case InputType.Player:
+                ClearPlayerObserber();
+                break;
+            case InputType.UI:
+                ClearUIObserver();
+                break;
+            default:
+                Debug.LogError("Invalid input type");
+                break;
+        }
+    }
+    #endregion
+
+    #region PlayerInput Methods
+
+    private void InitPlayerObserver()
     {
         inputActions.Player.Move.performed += ctx => OnMove?.Invoke();
         inputActions.Player.LocomotionToggle.performed += ctx => OnLocomotionToggle?.Invoke();
@@ -71,61 +171,56 @@ public class InputManager : Singleton<InputManager>
         inputActions.Player.Slot1.performed += ctx => OnSlot1?.Invoke(1);
         inputActions.Player.Slot2.performed += ctx => OnSlot2?.Invoke(2);
         inputActions.Player.Slot3.performed += ctx => OnSlot3?.Invoke(3);
+        inputActions.Player.Pause.performed += ctx => OnPause?.Invoke();
     }
 
-    private void CacheInputs()
+    private void CachePlayerInputs()
     {
         _moveInput = inputActions.Player.Move.ReadValue<Vector2>();
         _locomotionToggleInput = inputActions.Player.LocomotionToggle.IsPressed();
         _interactInput = inputActions.Player.Interact.IsPressed();
         _dropInput = inputActions.Player.Drop.IsPressed();
+        _slot0Input = inputActions.Player.Slot0.IsPressed();
         _slot1Input = inputActions.Player.Slot1.IsPressed();
         _slot2Input = inputActions.Player.Slot2.IsPressed();
         _slot3Input = inputActions.Player.Slot3.IsPressed();
-        _slot0Input = inputActions.Player.Slot0.IsPressed();
+        _pauseInput = inputActions.Player.Pause.IsPressed();
     }
 
-    private void ClearEventObserber()
+    private void ClearPlayerObserber()
     {
         inputActions.Player.Move.performed -= ctx => OnMove?.Invoke();
         inputActions.Player.LocomotionToggle.performed -= ctx => OnLocomotionToggle?.Invoke();
         inputActions.Player.Interact.performed -= ctx => OnInteract?.Invoke();
         inputActions.Player.Drop.performed -= ctx => OnDrop?.Invoke();
-        inputActions.Player.Slot1.performed -= ctx => OnSlot1?.Invoke(0);
-        inputActions.Player.Slot2.performed -= ctx => OnSlot2?.Invoke(1);
-        inputActions.Player.Slot3.performed -= ctx => OnSlot3?.Invoke(2);
-        inputActions.Player.Slot0.performed -= ctx => OnSlot0?.Invoke(3);
+        inputActions.Player.Slot0.performed -= ctx => OnSlot0?.Invoke(0);
+        inputActions.Player.Slot1.performed -= ctx => OnSlot1?.Invoke(1);
+        inputActions.Player.Slot2.performed -= ctx => OnSlot2?.Invoke(2);
+        inputActions.Player.Slot3.performed -= ctx => OnSlot3?.Invoke(3);
+        inputActions.Player.Pause.performed -= ctx => OnPause?.Invoke();
     }
     #endregion
 
-    #region internal methods
-
-    internal void EnableInput(object sender)
+    #region UIInput Methods
+    private void InitUIObserver()
     {
-        switch (sender)
-        {
-            case PlayerUnit:
-                inputActions.Player.Enable();
-                break;
-            default:
-                InitEventObserver();
-                inputActions.Enable();
-                break;
-        }
+        inputActions.UI.ClickLeft.performed += ctx => OnClickLeft?.Invoke();
+        inputActions.UI.ClickRight.performed += ctx => OnClickRight?.Invoke();
+        inputActions.UI.Exit.performed += ctx => OnExit?.Invoke();
     }
 
-    internal void DisableInput(object sender)
+    private void CacheUIInputs()
     {
-        switch (sender)
-        {
-            case PlayerUnit:
-                inputActions.Player.Disable();
-                break;
-            default:
-                ClearEventObserber();
-                inputActions.Disable();
-                break;
-        }
+        _clickLeftInput = inputActions.UI.ClickLeft.IsPressed();
+        _clickRightInput = inputActions.UI.ClickRight.IsPressed();
+        _exitInput = inputActions.UI.Exit.IsPressed();
+    }
+
+    private void ClearUIObserver()
+    {
+        inputActions.UI.ClickLeft.performed -= ctx => OnClickLeft?.Invoke();
+        inputActions.UI.ClickRight.performed -= ctx => OnClickRight?.Invoke();
+        inputActions.UI.Exit.performed -= ctx => OnExit?.Invoke();
     }
     #endregion
 }
