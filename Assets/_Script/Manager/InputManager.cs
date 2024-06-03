@@ -83,10 +83,15 @@ public class InputManager : Singleton<InputManager>
         CacheInputs();
     }
 
-
     #region Internal Methods
+    //init
+    internal void Init()
+    {
 
-    public void ChangeInputType(InputType inputType)
+    }
+
+    //ChangeInputType
+    internal void ChangeInputType(InputType inputType)
     {
         ClearObservers();
 
@@ -96,9 +101,13 @@ public class InputManager : Singleton<InputManager>
         {
             case InputType.Player:
                 inputActions.Player.Enable();
+
+                inputActions.UI.Disable();
                 break;
             case InputType.UI:
                 inputActions.UI.Enable();
+
+                inputActions.Player.Disable();
                 break;
             default:
                 Debug.LogError("Invalid input type");
@@ -200,7 +209,6 @@ public class InputManager : Singleton<InputManager>
         inputActions.Player.Pause.performed -= ctx => OnPause?.Invoke();
     }
     #endregion
-
     #region UIInput Methods
     private void InitUIObserver()
     {

@@ -5,11 +5,11 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Inventory", menuName = "ScriptableObjects/Inventory")]
 public class InventorySO : ScriptableObject
 {
-    [SerializeField] private List<ItemSO> items = new List<ItemSO>();
+    [SerializeField] private List<ItemInstance> items = new List<ItemInstance>();
     [SerializeField] private int maxItems = 4;
 
     #region ReusableMethods
-    public bool AddItem(ItemSO itemToAdd)
+    public bool AddItem(ItemInstance itemToAdd)
     {
         //if there are empty slots, add the item to the first empty slot
         for (int i = 0; i < items.Count; i++)
@@ -33,7 +33,7 @@ public class InventorySO : ScriptableObject
         return false;
     }
 
-    public bool AddItem(ItemSO itemToAdd, int index)
+    public bool AddItem(ItemInstance itemToAdd, int index)
     {
         if (index < 0 || index >= maxItems)
         {
@@ -63,7 +63,7 @@ public class InventorySO : ScriptableObject
         return false;
     }
 
-    public bool RemoveItem(ItemSO itemToRemove)
+    public bool RemoveItem(ItemInstance itemToRemove)
     {
         for (int i = 0; i < items.Count; i++)
         {
@@ -74,7 +74,7 @@ public class InventorySO : ScriptableObject
             }
         }
 
-        Debug.Log($"{itemToRemove.name} not found in inventory");
+        Debug.Log($"{itemToRemove.basicData.itemName} not found in inventory");
         return false;
     }
 
@@ -86,7 +86,7 @@ public class InventorySO : ScriptableObject
         items.Clear();
     }
 
-    public ItemSO GetItem(int index)
+    public ItemInstance GetItem(int index)
     {
         if (index < 0 || index >= maxItems)
         {
@@ -97,7 +97,7 @@ public class InventorySO : ScriptableObject
         return items[index];
     }
 
-    public List<ItemSO> GetItems()
+    public List<ItemInstance> GetItems()
     {
         return items;
     }

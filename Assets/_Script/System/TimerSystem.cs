@@ -22,8 +22,10 @@ public class TimerSystem : Singleton<TimerSystem>
     private Queue<TimerNode> timerToAddQueue;
     private Queue<TimerNode> timerToRemoveQueue;
 
-    private void Start()
+    protected override void Awake()
     {
+        base.Awake();
+
         Init();
     }
 
@@ -46,7 +48,7 @@ public class TimerSystem : Singleton<TimerSystem>
         timerToAddQueue = new Queue<TimerNode>();
         timerToRemoveQueue = new Queue<TimerNode>();
 
-        Debug.Log("TimerSystem init");
+        Debug.Log("Timer System initialized successfully");
     }
 
     private int GetNextID()
@@ -67,7 +69,7 @@ public class TimerSystem : Singleton<TimerSystem>
             {
                 TimerNode node = timerToAddQueue.Dequeue();
                 timerDict.Add(node.ID, node);
-            } 
+            }
         }
     }
 
@@ -136,15 +138,15 @@ public class TimerSystem : Singleton<TimerSystem>
     {
         ScheduleWithSenderRepeatly(callback, interval, 0, param);
     }
-    
+
     public void Schedule(TimerHandler callback, float interval)
     {
-        ScheduleWithSenderRepeatly(callback, interval, 0,  null);
+        ScheduleWithSenderRepeatly(callback, interval, 0, null);
     }
 
     public void ScheduleRepeatly(TimerHandler callback, float interval, int repeat)
     {
-        ScheduleWithSenderRepeatly(callback, interval,  repeat, null);
+        ScheduleWithSenderRepeatly(callback, interval, repeat, null);
     }
     #endregion
 
@@ -179,6 +181,6 @@ public class TimerSystem : Singleton<TimerSystem>
             }
         }
     }
-    
+
     #endregion
 }

@@ -1,11 +1,15 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class ResourceSystem : Singleton<ResourceSystem>
 {
-    //Dictionaries and Lists of resources should be assembled here
+    //ResourceSystem should have all the reference of managers,so that it can allocate and release resources
+    private InputManager inputManager => Singleton<InputManager>.Instance;
+    private UnitManager unitManager => Singleton<UnitManager>.Instance;
+    private ItemManager itemManager => Singleton<ItemManager>.Instance;
+    private UIManager uiManager => Singleton<UIManager>.Instance;
+
+
 
     protected override void Awake()
     {
@@ -14,8 +18,12 @@ public class ResourceSystem : Singleton<ResourceSystem>
         AssembleResources();
     }
 
+    #region Assemble Resource
+
     private void AssembleResources()
     {
-        //TODO:Assemble Dictionaries and Lists of resources
+
+        Debug.Log("Assemble Resources Finished");
     }
+    #endregion
 }

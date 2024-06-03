@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using UnityEngine.Windows;
 
 public class InventorySystem : Singleton<InventorySystem>
 {
@@ -24,7 +23,7 @@ public class InventorySystem : Singleton<InventorySystem>
     }
 
     #region internal
-    internal void AddItem(ItemSO item)
+    internal void AddItem(ItemInstance item)
     {
         if (inventory.AddItem(item))
         {
@@ -32,14 +31,14 @@ public class InventorySystem : Singleton<InventorySystem>
         }
     }
 
-    internal void AddItem(ItemSO item, int slotIndex)
+    internal void AddItem(ItemInstance item, int slotIndex)
     {
         if (inventory.AddItem(item, slotIndex))
         {
             OnInvenoryChanged?.Invoke();
         }
     }
-    
+
     internal void RemoveItem(int slotIndex)
     {
         if (inventory.RemoveItem(slotIndex))
@@ -48,7 +47,7 @@ public class InventorySystem : Singleton<InventorySystem>
         }
     }
 
-    internal void RemoveItem(ItemSO item)
+    internal void RemoveItem(ItemInstance item)
     {
         if (inventory.RemoveItem(item))
         {

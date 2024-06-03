@@ -13,7 +13,6 @@ MonoBehaviour:
   m_Name: Player
   m_EditorClassIdentifier: 
   unitName: Player
-  unitID: 0
   unitDescription: Super Administrator!!!!
   unitIcon: {fileID: 0}
   unitPrefab: {fileID: 1203365419481262694, guid: 9f5b6ae5034fa7344ac79047b0600101,

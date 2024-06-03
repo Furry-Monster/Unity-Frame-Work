@@ -1,12 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BaseUnitSO : ScriptableObject
 {
     [Header("text info")]
     public string unitName;
-    public int unitID;
     [TextArea]
     public string unitDescription;
 

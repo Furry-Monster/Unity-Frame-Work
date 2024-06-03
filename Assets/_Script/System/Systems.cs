@@ -9,5 +9,5 @@ public class Systems : PersistentSingleton<Systems>
 
     //flags
     public bool isInit = false;
-    
+
 }

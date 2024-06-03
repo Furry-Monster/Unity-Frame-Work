@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 
 /// <summary>
 /// States that your game might be in
@@ -28,6 +29,12 @@ public class GameManager : Singleton<GameManager>
 
     public void ChangeState(GameState newState)
     {
+#pragma warning disable CS0472 // 由于此类型的值永不等于 "null"，该表达式的结果始终相同
+        if (currentState != null)
+        {
+            OnAfterStateChanged?.Invoke(currentState);
+        }
+#pragma warning restore CS0472 // 由于此类型的值永不等于 "null"，该表达式的结果始终相同
         OnBeforeStateChanged?.Invoke(newState);
 
         currentState = newState;
@@ -55,34 +62,31 @@ public class GameManager : Singleton<GameManager>
             default:
                 throw new ArgumentOutOfRangeException(nameof(newState), newState, null);
         }
-
-        OnAfterStateChanged?.Invoke(newState);
     }
 
     //Handlers for state entering
     private void HandleStartingEnter()
     {
-        //not clear about what should be done here.....
+        //don't know what should be done here......
 
-        ChangeState(Singleton<Systems>.Instance.isInit ? GameState.Initializing : GameState.Loading);
+        ChangeState(Singleton<Systems>.Instance.isInit ? GameState.Loading : GameState.Initializing);
     }
     private void HandleInitializingEnter()
     {
         //system init,init data,set references,etc.
-
+        InitAll();
 
         Singleton<Systems>.Instance.isInit = true;
         ChangeState(GameState.Menu);
     }
     private void HandleMenuEnter()
     {
-
+        Singleton<TimerSystem>.Instance.Schedule(ctx => ChangeState(GameState.Loading), 2f);
     }
     private void HandleLoadingEnter()
     {
         //load game data, create player, etc.
-        Singleton<UnitManager>.Instance.SpawnUnit(Singleton<UnitManager>.Instance.unitDict[UnitType.Player]);
-        Singleton<InputManager>.Instance.ChangeInputType(InputType.Player);
+        Singleton<UnitManager>.Instance.SpawnUnit(Singleton<UnitManager>.Instance.GetUnitById("Player".GetHashCode()));Singleton<InputManager>.Instance.ChangeInputType(InputType.Player);
 
         ChangeState(GameState.GamePlay);
     }
@@ -94,4 +98,18 @@ public class GameManager : Singleton<GameManager>
     {
 
     }
+
+    #region Reusable
+    private void InitAll()
+    {
+        Singleton<UnitManager>.Instance.Init();
+        Singleton<ItemManager>.Instance.Init();
+        Singleton<UIManager>.Instance.Init();
+        Singleton<InputManager>.Instance.Init();
+    }
+
+
+    #endregion
+
+    
 }

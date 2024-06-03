@@ -1,10 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public class Managers : StaticInstance<Managers>
 {
-    
+
     //Connect to managers
     private GameManager gameManager => Singleton<GameManager>.Instance;
     private InputManager inputManager => Singleton<InputManager>.Instance;

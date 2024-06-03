@@ -1,13 +1,11 @@
+using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemInstance : MonoBehaviour
+[System.Serializable]
+public class ItemInstance
 {
-    public BaseItem item;
-    
-    public void Pick()
-    {
-        
-    }
+    public ItemSO basicData;
 
-    
+    [Header("Extend Datas")]
+    public List<BaseExtendsSO> extendsDatas = new List<BaseExtendsSO>();
 }

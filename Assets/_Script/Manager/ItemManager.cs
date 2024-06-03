@@ -1,77 +1,112 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class ItemManager : Singleton<ItemManager>
 {
-    public Dictionary<string, BaseItem> itemDict = new Dictionary<string, BaseItem>();
+    //itemList(shouldn't be able to visit directly,just for setting)
+    [SerializeField] private List<ItemInstance> items = new List<ItemInstance>();
 
-    #region SpawnItem
-    internal void SpawnItemAtPosition(string itemName, Vector3 position)
+    //itemDict(provide a way to visit items)
+    public Dictionary<int, ItemInstance> itemDict = new Dictionary<int, ItemInstance>();
+
+    #region CRUD
+    public void AddItem(ItemInstance item)
     {
-        if (itemDict.ContainsKey(itemName))
+        if (HasItem(item)) return;
+
+        items.Add(item);
+        itemDict.Add(item.basicData.itemName.GetHashCode(), item);
+    }
+    public void AddItems(List<ItemInstance> itemList)
+    {
+        items.AddRange(itemList);
+        foreach (ItemInstance item in itemList)
         {
-            BaseItem item = itemDict[itemName];
+            if (HasItem(item)) continue;
+            itemDict.Add(item.basicData.itemName.GetHashCode(), item);
+        }
+    }
+
+    public void RemoveItemById(int id)
+    {
+        if (HasItem(id))
+        {
+            ItemInstance item = itemDict[id];
+            items.Remove(item);
+            itemDict.Remove(id);
+        }
+    }
+    public void RemoveItem(ItemInstance item)
+    {
+        if (HasItem(item))
+        {
+            items.Remove(item);
+            itemDict.Remove(item.basicData.itemName.GetHashCode());
+        }
+    }
+
+    public void UpdateItem(ItemInstance item)
+    {
+        if (HasItem(item))
+        {
+            itemDict[item.basicData.itemName.GetHashCode()] = item;
+        }
+    }
+
+    public bool HasItem(int id)
+    {
+        return itemDict.ContainsKey(id);
+    }
+    public bool HasItem(ItemInstance item)
+    {
+        return itemDict.ContainsKey(item.basicData.itemName.GetHashCode());
+    }
+    public ItemInstance GetItemById(int id)
+    {
+        if (itemDict.ContainsKey(id))
+        {
+            return itemDict[id];
+        }
+        return null;
+    }
+    public List<ItemInstance> GetAllItem()
+    {
+        return items;
+    }
+    #endregion
+
+    #region internal
+    //init
+    internal void Init()
+    {
+        //load item data from list
+        foreach (ItemInstance item in items)
+        {
+            itemDict.Add(item.basicData.itemName.GetHashCode(), item);
+        }
+        Debug.Log($"{itemDict.Count}/{items.Count} items init successfully");
+    }
+
+    #region Spawn
+    internal void SpawnItemAtPosition(int itemID, Vector3 position)
+    {
+        if (itemDict.ContainsKey(itemID))
+        {
+            ItemInstance item = itemDict[itemID];
             Instantiate(item.basicData.itemPrefab, position, Quaternion.identity);
         }
     }
+
+    internal void SpawnItemUnderTransform(int itemID, Transform parent)
+    {
+        if (itemDict.ContainsKey(itemID))
+        {
+            ItemInstance item = itemDict[itemID];
+            var instance = Instantiate(item.basicData.itemPrefab, parent);
+        }
+    }
     #endregion
-    #region ClearItem
-    internal void ClearItem()
-    {
-
-    }
-    #endregion
-
-    #region ReusableMethods
-
-    public void AddItem(BaseItem item)
-    {
-        if (itemDict.ContainsKey(item.basicData.itemName))
-        {
-            Debug.LogWarning("Item already exists in the dictionary");
-        }
-        else
-        {
-            itemDict.Add(item.basicData.itemName, item);
-        }
-    }
-
-    public void RemoveItem(string itemName)
-    {
-        if (itemDict.ContainsKey(itemName))
-        {
-            itemDict.Remove(itemName);
-        }
-        else
-        {
-            Debug.LogWarning("Item does not exist in the dictionary");
-        }
-    }
-
-    public bool HasItem(string itemName)
-    {
-        return itemDict.ContainsKey(itemName);
-    }
-
-    public BaseItem GetItem(string itemName)
-    {
-        if (itemDict.ContainsKey(itemName))
-        {
-            return itemDict[itemName];
-        }
-        else
-        {
-            Debug.LogWarning("Item does not exist in the dictionary");
-            return null;
-        }
-    }
-
-    public List<BaseItem> GetAllItems()
-    {
-        return new List<BaseItem>(itemDict.Values);
-    }
-
 
     #endregion
+
 }

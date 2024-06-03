@@ -1,13 +1,13 @@
 using UnityEngine;
 
-public class PlayerUnit : BaseUnit
+public class PlayerUnit : UnitInstanceContainer
 {
     //Data
     internal PlayerUnitSO data
     {
         get
         {
-            return unitData as PlayerUnitSO;
+            return unit.unitData as PlayerUnitSO;
         }
     }
 
@@ -18,9 +18,8 @@ public class PlayerUnit : BaseUnit
     private PlayerStateMachine playerFSM;
 
     #region Main Methods
-    protected override void Awake()
+    protected void Awake()
     {
-        base.Awake();
 
         Debug.Log("PlayerUnit spawned");
 
@@ -31,9 +30,9 @@ public class PlayerUnit : BaseUnit
         playerFSM = new PlayerStateMachine(this);
     }
 
-    //private void OnEnable() => Singleton<InputManager>.Instance?.EnableInput(this);
+    private void OnEnable() => Singleton<InputManager>.Instance.ChangeInputType(InputType.Player);
 
-    //private void OnDisable() => Singleton<InputManager>.Instance?.DisableInput(this);
+    private void OnDisable() => Singleton<InputManager>.Instance.ChangeInputType(InputType.UI);
 
     private void Start()
     {

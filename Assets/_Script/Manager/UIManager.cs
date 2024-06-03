@@ -1,13 +1,11 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public enum UIType
 {
     PauseMenu,
     InventoryMenu,
+    HealthBar
 }
 
 [System.Serializable]
@@ -19,23 +17,22 @@ public struct DictionaryUIElements
 
 public class UIManager : Singleton<UIManager>
 {
-    public Dictionary<UIType,GameObject> uiDict = new Dictionary<UIType, GameObject>();
+    public Dictionary<UIType, GameObject> uiDict = new Dictionary<UIType, GameObject>();
     [SerializeField] List<DictionaryUIElements> uiDictVisual = new List<DictionaryUIElements>();
 
-    protected override void Awake()
+    #region internal
+    //Init
+    internal void Init()
     {
-        base.Awake();
-
-        foreach(DictionaryUIElements ui in uiDictVisual)
+        foreach (DictionaryUIElements ui in uiDictVisual)
         {
             uiDict.Add(ui.type, ui.instance);
         }
 
-        Debug.Log($"{uiDict.Count} units preloaded successfully");
+        Debug.Log($"{uiDict.Count}/{uiDictVisual.Count} UI elements loaded successfully");
     }
-
-    #region Enable/Disable
-    public void Enable(UIType type)
+    //Enable
+    internal void Enable(UIType type)
     {
         if (uiDict.ContainsKey(type))
         {
@@ -46,8 +43,8 @@ public class UIManager : Singleton<UIManager>
             Debug.Log($"{type} don't exsist in Manager");
         }
     }
-
-    public void Disable(UIType type)
+    //Disable
+    internal void Disable(UIType type)
     {
         if (uiDict.ContainsKey(type))
         {

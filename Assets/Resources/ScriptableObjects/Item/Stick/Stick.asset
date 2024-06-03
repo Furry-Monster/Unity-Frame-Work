@@ -13,12 +13,9 @@ MonoBehaviour:
   m_Name: Stick
   m_EditorClassIdentifier: 
   itemName: Stick
-  itemID: 1
   itemDescription: A stick,so ordinary it is that could be found anywhere.
   itemIcon: {fileID: 0}
-  itemPrefab: {fileID: 0}
+  itemPrefab: {fileID: 7794328955937511283, guid: 187f552a548fd73499d1054866999383,
+    type: 3}
   itemValue: 5
   itemWeight: 1
-  decoratorSO:
-  - {fileID: 11400000, guid: 34c8911bf7738ea47a67f5188d53eb42, type: 2}
-  - {fileID: 11400000, guid: e98574699539803498a188269884baf1, type: 2}

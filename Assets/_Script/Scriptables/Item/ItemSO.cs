@@ -6,7 +6,6 @@ public class ItemSO : ScriptableObject
 {
     [Header("text info")]
     public string itemName;
-    public int itemID;
     [TextArea]
     public string itemDescription;
 

@@ -30,12 +30,12 @@ public class InventoryDisplay : Singleton<InventoryDisplay>
     #region Reusable
     private void InventoryUpdate()
     {
-        List<ItemSO> currentSlots = inventorySystem.inventory.GetItems();
+        List<ItemInstance> currentSlots = inventorySystem.inventory.GetItems();
 
         //update slot image 
         for (int i = 0; i < slots.Length; i++)
         {
-            slots[i].sprite = currentSlots[i].itemIcon;
+            slots[i].sprite = currentSlots[i].basicData.itemIcon;
         }
     }
 
