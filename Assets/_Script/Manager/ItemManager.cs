@@ -9,6 +9,19 @@ public class ItemManager : Singleton<ItemManager>
     //itemDict(provide a way to visit items)
     public Dictionary<int, ItemInstance> itemDict = new Dictionary<int, ItemInstance>();
 
+    //default spawn parent
+    [SerializeField] private Transform defaultParent;
+
+    protected override void Awake()
+    {
+        base.Awake();
+
+        if(defaultParent == null)
+        {
+            defaultParent = GameObject.Find("Environment").transform.Find("_Items");
+        }
+    }
+
     #region CRUD
     public void AddItem(ItemInstance item)
     {
@@ -88,6 +101,11 @@ public class ItemManager : Singleton<ItemManager>
     }
 
     #region Spawn
+    /// <summary>
+    /// To Spawn an item at a specific position in world space
+    /// </summary>
+    /// <param name="itemID">itemHashID</param>
+    /// <param name="position">world space position</param>
     internal void SpawnItemAtPosition(int itemID, Vector3 position)
     {
         if (itemDict.ContainsKey(itemID))
@@ -97,6 +115,11 @@ public class ItemManager : Singleton<ItemManager>
         }
     }
 
+    /// <summary>
+    /// To Spawn an item under a specific transform
+    /// </summary>
+    /// <param name="itemID">itemHashID</param>
+    /// <param name="parent">parent transform</param>
     internal void SpawnItemUnderTransform(int itemID, Transform parent)
     {
         if (itemDict.ContainsKey(itemID))
@@ -104,6 +127,15 @@ public class ItemManager : Singleton<ItemManager>
             ItemInstance item = itemDict[itemID];
             var instance = Instantiate(item.basicData.itemPrefab, parent);
         }
+    }
+
+    /// <summary>
+    /// To Spawn an item under default parent transform
+    /// </summary>
+    /// <param name="itemID">itemHashID</param>
+    internal void SpawnItem(int itemID)
+    {
+        SpawnItemUnderTransform(itemID, defaultParent);
     }
     #endregion
 

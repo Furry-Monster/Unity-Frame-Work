@@ -1,6 +1,4 @@
-using JetBrains.Annotations;
 using UnityEngine;
-using UnityEngine.UIElements;
 public class PlayerRunState : PlayerGroundState
 {
     //cache
@@ -10,9 +8,9 @@ public class PlayerRunState : PlayerGroundState
     private Vector3 _targetRotation;
     private Vector3 _currentRotation;
 
-    public PlayerRunState(PlayerStateMachine playerStateMachine):base(playerStateMachine)
+    public PlayerRunState(PlayerStateMachine playerStateMachine) : base(playerStateMachine)
     {
-        
+
     }
 
     public override void OnEnter()
@@ -20,6 +18,8 @@ public class PlayerRunState : PlayerGroundState
         base.OnEnter();
 
         _currentSpeed = rigidbody.velocity.magnitude;
+        _currentRotation = playerStateMachine.player.transform.forward;
+
     }
 
     public override void HandleInput()

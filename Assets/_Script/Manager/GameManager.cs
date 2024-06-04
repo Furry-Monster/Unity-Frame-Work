@@ -1,5 +1,4 @@
 using System;
-using UnityEngine;
 
 /// <summary>
 /// States that your game might be in
@@ -85,8 +84,12 @@ public class GameManager : Singleton<GameManager>
     }
     private void HandleLoadingEnter()
     {
-        //load game data, create player, etc.
-        Singleton<UnitManager>.Instance.SpawnUnit(Singleton<UnitManager>.Instance.GetUnitById("Player".GetHashCode()));Singleton<InputManager>.Instance.ChangeInputType(InputType.Player);
+        //Spawn player
+        Singleton<UnitManager>.Instance.SpawnUnit(Singleton<UnitManager>.Instance.GetUnitById("Player".GetHashCode())); Singleton<InputManager>.Instance.ChangeInputType(InputType.Player);
+        //Enable input mapping
+        Singleton<InputManager>.Instance.ChangeInputType(InputType.Player);
+        //Spawn test item
+        Singleton<ItemManager>.Instance.SpawnItem("Stick".GetHashCode());
 
         ChangeState(GameState.GamePlay);
     }
@@ -108,8 +111,7 @@ public class GameManager : Singleton<GameManager>
         Singleton<InputManager>.Instance.Init();
     }
 
-
     #endregion
 
-    
+
 }

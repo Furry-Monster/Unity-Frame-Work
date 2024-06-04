@@ -8,7 +8,7 @@ public class InventorySO : ScriptableObject
     [SerializeField] private List<ItemInstance> items = new List<ItemInstance>();
     [SerializeField] private int maxItems = 4;
 
-    #region ReusableMethods
+    #region CRUD
     public bool AddItem(ItemInstance itemToAdd)
     {
         //if there are empty slots, add the item to the first empty slot
@@ -32,7 +32,6 @@ public class InventorySO : ScriptableObject
         Debug.Log("Inventory is full");
         return false;
     }
-
     public bool AddItem(ItemInstance itemToAdd, int index)
     {
         if (index < 0 || index >= maxItems)
@@ -51,6 +50,7 @@ public class InventorySO : ScriptableObject
         return false;
     }
 
+
     public bool RemoveItem(int index)
     {
         if (items[index] != null)
@@ -62,7 +62,6 @@ public class InventorySO : ScriptableObject
         Debug.Log($"Item not found in slot {index}");
         return false;
     }
-
     public bool RemoveItem(ItemInstance itemToRemove)
     {
         for (int i = 0; i < items.Count; i++)
@@ -77,7 +76,6 @@ public class InventorySO : ScriptableObject
         Debug.Log($"{itemToRemove.basicData.itemName} not found in inventory");
         return false;
     }
-
     /// <summary>
     /// Better not calling this methods
     /// </summary>
@@ -86,6 +84,19 @@ public class InventorySO : ScriptableObject
         items.Clear();
     }
 
+    public bool HasItem(ItemInstance item)
+    {
+        for(int i = 0; i < items.Count; i++)
+        {
+            if (items[i] == item)
+                return true;
+        }
+        return false;
+    }
+    public bool HasItemByIndex(int index)
+    {
+        return items[index] == null;
+    }
     public ItemInstance GetItem(int index)
     {
         if (index < 0 || index >= maxItems)
@@ -96,7 +107,6 @@ public class InventorySO : ScriptableObject
 
         return items[index];
     }
-
     public List<ItemInstance> GetItems()
     {
         return items;

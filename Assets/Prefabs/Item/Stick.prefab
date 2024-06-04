@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 2358944187871589782}
   - component: {fileID: 1671312489388615899}
   - component: {fileID: 1691563057834460975}
-  m_Layer: 0
+  - component: {fileID: -2182541083368935047}
+  m_Layer: 6
   m_Name: Stick
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -101,3 +102,26 @@ MonoBehaviour:
     extendsDatas:
     - {fileID: 11400000, guid: e98574699539803498a188269884baf1, type: 2}
     - {fileID: 11400000, guid: 34c8911bf7738ea47a67f5188d53eb42, type: 2}
+  highlightMaterial: {fileID: 2100000, guid: 609d59fe57ed9c046838557598142175, type: 2}
+  defaultMaterial: {fileID: 2100000, guid: 360c27c7202cf0b4b86a2e1e098da3ae, type: 2}
+--- !u!65 &-2182541083368935047
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7794328955937511283}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}

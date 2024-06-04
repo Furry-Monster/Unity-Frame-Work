@@ -4,7 +4,10 @@ using UnityEngine.UI;
 
 public class InventoryDisplay : Singleton<InventoryDisplay>
 {
-    //ref
+    //model data
+    public InventorySO inventory { get; private set; }
+    [SerializeField] private string PATH = "ScriptableObjects/Inventory";//load path
+    //ref to controller
     private InventorySystem inventorySystem => Singleton<InventorySystem>.Instance;
 
     [SerializeField] private Image[] slots = new Image[4];
@@ -12,25 +15,24 @@ public class InventoryDisplay : Singleton<InventoryDisplay>
     protected override void Awake()
     {
         base.Awake();
-
-        if (slots.Length < 4)
-        {
-            Debug.LogError("InventoryDisplay: Not enough slot in the inventory display");
-        }
     }
 
     private void Start()
     {
+        if (inventory == null)
+        {
+            inventory = Resources.Load<InventorySO>(PATH);
+        }
+
         inventorySystem.OnInvenoryChanged += InventoryUpdate;
 
         inventorySystem.OnSelectedSlotChanged += SelectedSlotUpdate;
     }
 
-
     #region Reusable
     private void InventoryUpdate()
     {
-        List<ItemInstance> currentSlots = inventorySystem.inventory.GetItems();
+        List<ItemInstance> currentSlots = inventory.GetItems();
 
         //update slot image 
         for (int i = 0; i < slots.Length; i++)

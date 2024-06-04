@@ -3,9 +3,11 @@ using UnityEngine;
 
 public class InventorySystem : Singleton<InventorySystem>
 {
+    //model data
     public InventorySO inventory { get; private set; }
-
-    [SerializeField] private string PATH = "ScriptableObjects/Inventory";
+    [SerializeField] private string PATH = "ScriptableObjects/Inventory";//load path
+    //ref to visual
+    private InventoryDisplay inventoryDisplay => Singleton<InventoryDisplay>.Instance;
 
     //events
     public event Action OnInvenoryChanged;//called when the inventory is changed(eg. add or remove item)
@@ -16,13 +18,23 @@ public class InventorySystem : Singleton<InventorySystem>
     {
         base.Awake();
 
-        inventory = Resources.Load<InventorySO>(PATH);
-        Debug.Log("inventory data loaded successfully!");
-
-        AddListeners();
+        Init();
     }
 
     #region internal
+    //init
+    internal void Init()
+    {
+        //init controller
+        inventory = Resources.Load<InventorySO>(PATH);
+        Debug.Log("inventory data loaded successfully!");
+
+        //init visual will be automatically done by the class itself
+
+        Singleton<InputManager>.Instance.OnSlot += ctx => OnSelectedSlotChanged?.Invoke(ctx);
+    }
+
+    //add
     internal void AddItem(ItemInstance item)
     {
         if (inventory.AddItem(item))
@@ -30,7 +42,6 @@ public class InventorySystem : Singleton<InventorySystem>
             OnInvenoryChanged?.Invoke();
         }
     }
-
     internal void AddItem(ItemInstance item, int slotIndex)
     {
         if (inventory.AddItem(item, slotIndex))
@@ -39,6 +50,7 @@ public class InventorySystem : Singleton<InventorySystem>
         }
     }
 
+    //remove
     internal void RemoveItem(int slotIndex)
     {
         if (inventory.RemoveItem(slotIndex))
@@ -46,7 +58,6 @@ public class InventorySystem : Singleton<InventorySystem>
             OnInvenoryChanged?.Invoke();
         }
     }
-
     internal void RemoveItem(ItemInstance item)
     {
         if (inventory.RemoveItem(item))
@@ -54,20 +65,6 @@ public class InventorySystem : Singleton<InventorySystem>
             OnInvenoryChanged?.Invoke();
         }
     }
-    #endregion
 
-    #region Reusable
-    private void AddListeners()
-    {
-        Singleton<InputManager>.Instance.OnSlot0 += OnSlotChanged;
-        Singleton<InputManager>.Instance.OnSlot1 += OnSlotChanged;
-        Singleton<InputManager>.Instance.OnSlot2 += OnSlotChanged;
-        Singleton<InputManager>.Instance.OnSlot3 += OnSlotChanged;
-    }
-
-    private void OnSlotChanged(int slotIndex)
-    {
-        OnSelectedSlotChanged?.Invoke(slotIndex);
-    }
     #endregion
 }

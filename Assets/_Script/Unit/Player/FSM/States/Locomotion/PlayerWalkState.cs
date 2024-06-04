@@ -1,7 +1,7 @@
 using UnityEngine;
 public class PlayerWalkState : PlayerGroundState
 {
-    
+
     //cache
     private Vector2 _moveInput;
     private float _targetSpeed;
@@ -9,7 +9,7 @@ public class PlayerWalkState : PlayerGroundState
     private Vector3 _targetRotation;
     private Vector3 _currentRotation;
 
-    public PlayerWalkState(PlayerStateMachine playerStateMachine):base(playerStateMachine)
+    public PlayerWalkState(PlayerStateMachine playerStateMachine) : base(playerStateMachine)
     {
     }
 
@@ -18,6 +18,7 @@ public class PlayerWalkState : PlayerGroundState
         base.OnEnter();
 
         _currentSpeed = rigidbody.velocity.magnitude;
+        _currentRotation = playerStateMachine.player.transform.forward;
     }
 
     public override void HandleInput()
@@ -71,8 +72,8 @@ public class PlayerWalkState : PlayerGroundState
 
     private void Move()
     {
-        Vector3 _moveDir = new Vector3(_moveInput.x, 0, _moveInput.y);        
-        
+        Vector3 _moveDir = new Vector3(_moveInput.x, 0, _moveInput.y);
+
         if (_moveInput.magnitude > 0.1f)
         {
             _targetSpeed = playerData.walkSpeed;
@@ -90,8 +91,8 @@ public class PlayerWalkState : PlayerGroundState
     private void Rotate()
     {
         Vector3 _moveDir = new Vector3(_moveInput.x, 0, _moveInput.y);
-        
-        if(_moveDir != Vector3.zero)
+
+        if (_moveDir != Vector3.zero)
         {
             _targetRotation = _moveDir;
             _currentRotation = Vector3.Lerp(_currentRotation, _targetRotation, Time.deltaTime * playerData.turnSpeed);

@@ -63,7 +63,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 2
-  m_Constraints: 84
+  m_Constraints: 116
   m_CollisionDetection: 2
 --- !u!136 &8534754546654230264
 CapsuleCollider:
@@ -128,7 +128,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1536437829395439886}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.38484097, y: 0.000000015881191, z: -0.000000006621719, w: 0.92298293}
+  m_LocalRotation: {x: 0.38484097, y: -0.000000015881199, z: 0.000000006621723, w: 0.92298293}
   m_LocalPosition: {x: 0, y: 21.5, z: -21.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0

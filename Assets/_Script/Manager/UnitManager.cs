@@ -9,6 +9,7 @@ public class UnitManager : Singleton<UnitManager>
     //UnitDict
     public Dictionary<int, UnitInstance> unitDict = new Dictionary<int, UnitInstance>();
 
+    //default spawn parent
     [SerializeField] private Transform defaultParent;
 
     protected override void Awake()
@@ -17,7 +18,7 @@ public class UnitManager : Singleton<UnitManager>
 
         if (defaultParent == null)
         {
-            defaultParent = GameObject.Find("Environment").GetComponent<Transform>().Find("Units");
+            defaultParent = GameObject.Find("Environment").GetComponent<Transform>().Find("_Units");
             //better set previously
         }
 
