@@ -1,5 +1,16 @@
 using System;
 
+//==========================
+// - Created: FurryMonster
+// - LastModifiedTime: 2024-6-5 14:21:33
+// - Description:
+//          这里管理游戏的状态机，
+//          包括游戏开始，初始化，菜单，加载，游戏中，暂停等状态。
+//          
+//          对于游戏状态的划分，我没有很多经验，
+//          所以这里的划分可能比较粗糙，需要根据实际情况进行调整。
+//==========================
+
 /// <summary>
 /// States that your game might be in
 /// </summary>
@@ -80,6 +91,7 @@ public class GameManager : Singleton<GameManager>
     }
     private void HandleMenuEnter()
     {
+        //just for debug,change to loading after 2 seconds
         Singleton<TimerSystem>.Instance.Schedule(ctx => ChangeState(GameState.Loading), 2f);
     }
     private void HandleLoadingEnter()
@@ -109,6 +121,7 @@ public class GameManager : Singleton<GameManager>
         Singleton<ItemManager>.Instance.Init();
         Singleton<UIManager>.Instance.Init();
         Singleton<InputManager>.Instance.Init();
+        Singleton<AssetBundleManager>.Instance.Init();
     }
 
     #endregion

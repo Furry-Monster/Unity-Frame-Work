@@ -1,6 +1,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//==========================
+// - Created: FurryMonster
+// - LastModifiedTime: 2024-6-5 14:21:33
+// - Description:
+//          这个脚本主要是管理物品的注册和生成，
+//          包括物品的注册（CRUD）、生成、销毁、获取等功能。
+//==========================
+
 public class ItemManager : Singleton<ItemManager>
 {
     //itemList(shouldn't be able to visit directly,just for setting)

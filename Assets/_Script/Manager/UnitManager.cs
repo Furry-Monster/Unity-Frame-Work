@@ -1,6 +1,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+//==========================
+// - Created: FurryMonster
+// - LastModifiedTime: 2024-6-5 14:21:33
+// - Description:
+//          这个脚本主要是管理单位（包括角色、怪物、实体）的注册和生成，
+//          包括实体的注册（CRUD）、生成、销毁、获取等功能。
+//==========================
 public class UnitManager : Singleton<UnitManager>
 {
     //UnitList

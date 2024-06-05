@@ -1,6 +1,21 @@
 using System;
 using UnityEngine;
 
+//==========================
+// - Created: FurryMonster
+// - LastModifiedTime: 2024-6-5 14:21:33
+// - Description:
+//          这个脚本管理着输入的管理，
+//          包括Player输入和UI输入，
+//          并且提供了一些事件，用于监听输入的变化。
+//          
+//          这里我必须阐明这个Manager与其他manager的区别：
+//          由于这个Manager属于对InputActions的一个二次封装，所以没有采用字典来做映射，
+//          相反我只利用枚举和Switch语句来管理输入的类型，
+//          这样的结果是导致输入输出的代码可读性较差
+//          同时，由于枚举的限制，我只能定义两种输入类型，
+//          这也限制了输入的种类，但对于一般的游戏来说应该够用了。
+//==========================
 public enum InputType
 {
     Player,

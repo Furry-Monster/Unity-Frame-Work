@@ -1,6 +1,14 @@
 using System;
 using UnityEngine;
 
+
+//==========================
+// - Created: FurryMonster
+// - LastModifiedTime: 2024-6-5 14:21:33
+// - Description:
+//          这个脚本是基于Item系统开发的 库存系统，
+//          由于是在Item系统上进行迭代，可读性较差，未来会进行重构
+//==========================
 public class InventorySystem : Singleton<InventorySystem>
 {
     //model data

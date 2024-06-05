@@ -454,6 +454,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da2ce6bb52a07c14c800b180a08b36f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PATH: ScriptableObjects/Inventory
   slots:
   - {fileID: 67403123}
   - {fileID: 1354627939}
@@ -2659,6 +2660,7 @@ Transform:
   - {fileID: 577350016}
   - {fileID: 846888969}
   - {fileID: 1563744602}
+  - {fileID: 1384211124}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1168084477
@@ -3145,6 +3147,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1376316957}
   m_CullTransparentMesh: 1
+--- !u!1 &1384211123
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1384211124}
+  - component: {fileID: 1384211125}
+  m_Layer: 0
+  m_Name: AssetBundleManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1384211124
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1384211123}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1158484021}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1384211125
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1384211123}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e807c5572ccdd246b872676203c63df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1471235142
 GameObject:
   m_ObjectHideFlags: 0
@@ -4147,11 +4193,11 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1158484021}
+  - {fileID: 1237426231}
+  - {fileID: 506675109}
   - {fileID: 1740336370}
   - {fileID: 1602252127}
   - {fileID: 550050910}
   - {fileID: 568669557}
-  - {fileID: 1237426231}
-  - {fileID: 506675109}
   - {fileID: 1327317854}
   - {fileID: 1959364594}

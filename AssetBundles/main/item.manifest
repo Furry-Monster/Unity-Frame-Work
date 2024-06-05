@@ -1,0 +1,46 @@
+ManifestFileVersion: 0
+CRC: 3747713038
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: fd928a545d2ce6de23f8a78c6add1988
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 5d5ce8dcf280ccb564ddff3011015d73
+  IncrementalBuildHash:
+    serializedVersion: 2
+    Hash: fd928a545d2ce6de23f8a78c6add1988
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 23
+  Script: {instanceID: 0}
+- Class: 33
+  Script: {instanceID: 0}
+- Class: 43
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 65
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 11500000, guid: 4318bc1a20cb80343ba7f2a3f2220330, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 08785148101da5540938cdaee2072433, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 10b61d14fb0ec7f47a23e7f6d6bafa73, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 91d1ae12893da094f8acefb69028d380, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers:
+- AssemblyName: Assembly-CSharp
+  ClassName: ItemInstance
+Assets:
+- Assets/Prefabs/Item/Stick.prefab
+Dependencies: []

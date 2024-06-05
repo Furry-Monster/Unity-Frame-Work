@@ -1,6 +1,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//==========================
+// - Created: FurryMonster
+// - LastModifiedTime: 2024-6-5 14:21:33
+// - Description:
+//          这个脚本主要用于设定游戏内的定时器，
+//          定时模块我采用的是Update函数，每帧检查是否有定时器需要执行，
+//          没有采用携程，主要是因为:
+//          Unity的携程仍然是单线程的，如果有大量的定时器需要执行，就会导致游戏的卡顿
+//==========================
 public class TimerSystem : Singleton<TimerSystem>
 {
     private class TimerNode
