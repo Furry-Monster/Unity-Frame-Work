@@ -8,15 +8,8 @@ using UnityEngine;
 //          
 //          请区分这个它和AssetBundleManager.cs，他们管理的资源存在一定的差异
 //==========================
-public class ResourceSystem : Singleton<ResourceSystem>
+public class ResourceManager : Singleton<ResourceManager>
 {
-    //ResourceSystem should have all the reference of managers,so that it can allocate and release resources
-    private InputManager inputManager => Singleton<InputManager>.Instance;
-    private UnitManager unitManager => Singleton<UnitManager>.Instance;
-    private ItemManager itemManager => Singleton<ItemManager>.Instance;
-    private UIManager uiManager => Singleton<UIManager>.Instance;
-
-
 
     protected override void Awake()
     {
@@ -34,4 +27,11 @@ public class ResourceSystem : Singleton<ResourceSystem>
     }
     #endregion
 
+    #region internal 
+    internal void Init()
+    {
+
+    }
+
+    #endregion
 }

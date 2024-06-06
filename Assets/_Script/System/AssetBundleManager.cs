@@ -37,6 +37,8 @@ public class AssetBundleManager : Singleton<AssetBundleManager>
             mainBundle = AssetBundle.LoadFromFile(assetBundlePathUrl + "main");
             manifest = mainBundle.LoadAsset<AssetBundleManifest>("AssetBundleManifest");
         }
+
+        Debug.Log("AssetBundleManager Init Successfully");
     }
 
     //Bundle Operations
@@ -264,6 +266,6 @@ public class AssetBundleManager : Singleton<AssetBundleManager>
 
 
     #endregion
-    
+
     #endregion
 }

@@ -8,7 +8,7 @@ using UnityEngine;
 //          ∞¸¿®±≥æ∞“Ù¿÷∫Õ“Ù–ß°£
 //==========================
 
-public class AudioSystem : Singleton<AudioSystem>
+public class AudioManager : Singleton<AudioManager>
 {
     [SerializeField] private AudioSource soundSource;
     [SerializeField] private AudioSource musicSource;

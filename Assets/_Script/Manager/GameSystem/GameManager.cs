@@ -5,7 +5,7 @@ using System;
 // - LastModifiedTime: 2024-6-5 14:21:33
 // - Description:
 //          这里管理游戏的状态机，
-//          包括游戏开始，初始化，菜单，加载，游戏中，暂停等状态。
+//          包括游戏开始，初始化，加载，游戏中，暂停,重置等状态。
 //          
 //          对于游戏状态的划分，我没有很多经验，
 //          所以这里的划分可能比较粗糙，需要根据实际情况进行调整。
@@ -19,10 +19,10 @@ public enum GameState
 {
     Starting,
     Initializing, //please distinguish between loading and initializing,this is for init systems,only load once.
-    Menu,
-    Loading,// this is for loading assets, could load for many times
+    Loading,      // this is for loading assets, could load for many times
     GamePlay,
     Paused,
+    Reset
 }
 
 public class GameManager : Singleton<GameManager>
@@ -57,9 +57,6 @@ public class GameManager : Singleton<GameManager>
             case GameState.Initializing:
                 HandleInitializingEnter();
                 break;
-            case GameState.Menu:
-                HandleMenuEnter();
-                break;
             case GameState.Loading:
                 HandleLoadingEnter();
                 break;
@@ -69,12 +66,15 @@ public class GameManager : Singleton<GameManager>
             case GameState.Paused:
                 HandlePausedEnter();
                 break;
+            case GameState.Reset:
+                HandleResetEnter();
+                break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(newState), newState, null);
         }
     }
 
-    //Handlers for state entering
+    #region Handlers for state entering
     private void HandleStartingEnter()
     {
         //don't know what should be done here......
@@ -87,12 +87,7 @@ public class GameManager : Singleton<GameManager>
         InitAll();
 
         Singleton<Systems>.Instance.isInit = true;
-        ChangeState(GameState.Menu);
-    }
-    private void HandleMenuEnter()
-    {
-        //just for debug,change to loading after 2 seconds
-        Singleton<TimerSystem>.Instance.Schedule(ctx => ChangeState(GameState.Loading), 2f);
+        ChangeState(GameState.Loading);
     }
     private void HandleLoadingEnter()
     {
@@ -113,15 +108,30 @@ public class GameManager : Singleton<GameManager>
     {
 
     }
+    private void HandleResetEnter()
+    {
+
+
+        ChangeState(GameState.Loading);
+    }
+
+    #endregion
+
 
     #region Reusable
     private void InitAll()
     {
+        //critically important managers(global) should be initialized first
+        Singleton<GameSceneManager>.Instance.Init();
+        Singleton<AssetBundleManager>.Instance.Init();
+        Singleton<ResourceManager>.Instance.Init();
+        Singleton<InputManager>.Instance.Init();
+
+
+        //other managers(unique in scene) should be initialized later
         Singleton<UnitManager>.Instance.Init();
         Singleton<ItemManager>.Instance.Init();
         Singleton<UIManager>.Instance.Init();
-        Singleton<InputManager>.Instance.Init();
-        Singleton<AssetBundleManager>.Instance.Init();
     }
 
     #endregion

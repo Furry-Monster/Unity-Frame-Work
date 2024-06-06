@@ -10,7 +10,4 @@ public class Managers : StaticInstance<Managers>
     private AssetBundleManager abManager => Singleton<AssetBundleManager>.Instance;
     */
 
-    //flags
-    public bool isPause = false;
-
 }
