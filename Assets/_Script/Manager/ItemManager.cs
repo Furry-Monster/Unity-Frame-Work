@@ -105,7 +105,8 @@ public class ItemManager : Singleton<ItemManager>
         {
             itemDict.Add(item.basicData.itemName.GetHashCode(), item);
         }
-        Debug.Log($"{itemDict.Count}/{items.Count} items init successfully");
+
+        Debug.Log($"{itemDict.Count}/{items.Count} items loaded successfully");
     }
 
     #region Spawn

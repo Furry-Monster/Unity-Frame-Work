@@ -1,8 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public class ObjectPoolManager : Singleton<ObjectPoolManager>
 {
-    
+    #region internal
+    internal void Init()
+    {
+
+    }
+
+    #endregion
 }

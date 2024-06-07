@@ -5,8 +5,10 @@ public abstract class BaseStateMachine
     protected IState currentState;
     //if needed , a "lastState" could be set here
 
+    //interface
     protected abstract void Init();
 
+    //main methods
     public void ChangeState(IState newState)
     {
         currentState?.OnExit();

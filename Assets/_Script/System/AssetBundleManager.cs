@@ -61,6 +61,7 @@ public class AssetBundleManager : Singleton<AssetBundleManager>
         if (!loadedBundlesDict.ContainsKey(bundleName))
         {
             AssetBundle bundle = AssetBundle.LoadFromFile(assetBundlePathUrl + bundleName);
+            loadedBundlesDict.Add(bundleName, bundle);
         }
     }
     internal void LoadBundleAsync(string bundleName, System.Action<bool> isSuccessCallback)

@@ -27,6 +27,7 @@ public class InventorySystem : Singleton<InventorySystem>
         base.Awake();
 
         Init();
+        Debug.Log("InventorySystem inited!");
     }
 
     #region internal
@@ -40,6 +41,8 @@ public class InventorySystem : Singleton<InventorySystem>
         //init visual will be automatically done by the class itself
 
         Singleton<InputManager>.Instance.OnSlot += ctx => OnSelectedSlotChanged?.Invoke(ctx);
+
+
     }
 
     //add

@@ -80,15 +80,6 @@ public class InputManager : Singleton<InputManager>
 
     #endregion
 
-    protected override void Awake()
-    {
-        base.Awake();
-
-        if (inputActions == null)
-        {
-            inputActions = new InputActions();
-        }
-    }
 
     private void Update()
     {
@@ -99,7 +90,12 @@ public class InputManager : Singleton<InputManager>
     //init
     internal void Init()
     {
+        if (inputActions == null)
+        {
+            inputActions = new InputActions();
+        }
 
+        Debug.Log("InputManager initialized successfully");
     }
 
     //ChangeInputType

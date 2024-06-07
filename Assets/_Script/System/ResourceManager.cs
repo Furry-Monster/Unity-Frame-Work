@@ -10,27 +10,10 @@ using UnityEngine;
 //==========================
 public class ResourceManager : Singleton<ResourceManager>
 {
-
-    protected override void Awake()
-    {
-        base.Awake();
-
-        AssembleResources();
-    }
-
-    #region Assemble Resource
-
-    private void AssembleResources()
-    {
-
-        Debug.Log("Assemble Resources Finished");
-    }
-    #endregion
-
     #region internal 
     internal void Init()
     {
-
+        Debug.Log("Resource Manager initialized successfully");
     }
 
     #endregion
