@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 //==========================
@@ -11,11 +12,20 @@ using UnityEngine;
 
 public class ItemManager : Singleton<ItemManager>
 {
-    //itemList(shouldn't be able to visit directly,just for setting)
+    //itemList(shouldn't be able to visit directly,just for setting in editor)
     [SerializeField] private List<ItemInstance> items = new List<ItemInstance>();
+    public List<ItemInstance> Items
+    {
+        get
+        {
+            //every time we load some new item,we need to update the items list for visual
+            UpdateItemsVisual();
+            return items;
+        }
+    }
 
-    //itemDict(provide a way to visit items)
-    public Dictionary<int, ItemInstance> itemDict = new Dictionary<int, ItemInstance>();
+    //itemDict
+    private Dictionary<string, ItemInstance> itemDict = new Dictionary<string, ItemInstance>();
 
     //default spawn parent
     [SerializeField] private Transform defaultParent;
@@ -24,7 +34,8 @@ public class ItemManager : Singleton<ItemManager>
     {
         base.Awake();
 
-        if(defaultParent == null)
+        //get default parent
+        if (defaultParent == null)
         {
             defaultParent = GameObject.Find("Environment").transform.Find("_Items");
         }
@@ -35,34 +46,14 @@ public class ItemManager : Singleton<ItemManager>
     {
         if (HasItem(item)) return;
 
-        items.Add(item);
-        itemDict.Add(item.basicData.itemName.GetHashCode(), item);
-    }
-    public void AddItems(List<ItemInstance> itemList)
-    {
-        items.AddRange(itemList);
-        foreach (ItemInstance item in itemList)
-        {
-            if (HasItem(item)) continue;
-            itemDict.Add(item.basicData.itemName.GetHashCode(), item);
-        }
+        itemDict.Add(item.basicData.itemName, item);
     }
 
-    public void RemoveItemById(int id)
+    public void RemoveItem(string itemID)
     {
-        if (HasItem(id))
+        if (HasItem(itemID))
         {
-            ItemInstance item = itemDict[id];
-            items.Remove(item);
-            itemDict.Remove(id);
-        }
-    }
-    public void RemoveItem(ItemInstance item)
-    {
-        if (HasItem(item))
-        {
-            items.Remove(item);
-            itemDict.Remove(item.basicData.itemName.GetHashCode());
+            itemDict.Remove(itemID);
         }
     }
 
@@ -70,29 +61,25 @@ public class ItemManager : Singleton<ItemManager>
     {
         if (HasItem(item))
         {
-            itemDict[item.basicData.itemName.GetHashCode()] = item;
+            itemDict[item.basicData.itemName] = item;
         }
     }
 
-    public bool HasItem(int id)
+    public bool HasItem(string itemID)
     {
-        return itemDict.ContainsKey(id);
+        return itemDict.ContainsKey(itemID);
     }
     public bool HasItem(ItemInstance item)
     {
-        return itemDict.ContainsKey(item.basicData.itemName.GetHashCode());
+        return itemDict.ContainsKey(item.basicData.itemName);
     }
-    public ItemInstance GetItemById(int id)
+    public ItemInstance GetItem(string itemID)
     {
-        if (itemDict.ContainsKey(id))
+        if (itemDict.ContainsKey(itemID))
         {
-            return itemDict[id];
+            return itemDict[itemID];
         }
         return null;
-    }
-    public List<ItemInstance> GetAllItem()
-    {
-        return items;
     }
     #endregion
 
@@ -103,51 +90,39 @@ public class ItemManager : Singleton<ItemManager>
         //load item data from list
         foreach (ItemInstance item in items)
         {
-            itemDict.Add(item.basicData.itemName.GetHashCode(), item);
+            itemDict.Add(item.basicData.itemName, item);
         }
 
         Debug.Log($"{itemDict.Count}/{items.Count} items loaded successfully");
     }
 
     #region Spawn
-    /// <summary>
-    /// To Spawn an item at a specific position in world space
-    /// </summary>
-    /// <param name="itemID">itemHashID</param>
-    /// <param name="position">world space position</param>
-    internal void SpawnItemAtPosition(int itemID, Vector3 position)
-    {
-        if (itemDict.ContainsKey(itemID))
-        {
-            ItemInstance item = itemDict[itemID];
-            Instantiate(item.basicData.itemPrefab, position, Quaternion.identity);
-        }
-    }
-
-    /// <summary>
-    /// To Spawn an item under a specific transform
-    /// </summary>
-    /// <param name="itemID">itemHashID</param>
-    /// <param name="parent">parent transform</param>
-    internal void SpawnItemUnderTransform(int itemID, Transform parent)
+    internal void SpawnItem(string itemID, Transform parent, Vector3 pos = default, Quaternion rot = default)
     {
         if (itemDict.ContainsKey(itemID))
         {
             ItemInstance item = itemDict[itemID];
             var instance = Instantiate(item.basicData.itemPrefab, parent);
+
+            instance.transform.position = pos;
+            instance.transform.rotation = rot;
         }
     }
 
-    /// <summary>
-    /// To Spawn an item under default parent transform
-    /// </summary>
-    /// <param name="itemID">itemHashID</param>
-    internal void SpawnItem(int itemID)
+    internal void SpawnItem(string itemID)
     {
-        SpawnItemUnderTransform(itemID, defaultParent);
+        SpawnItem(itemID, defaultParent);
     }
     #endregion
 
     #endregion
 
+
+    #region Editor
+    private void UpdateItemsVisual()
+    {
+        items = itemDict.Values.ToList();
+    }
+
+    #endregion
 }

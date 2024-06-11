@@ -1,6 +1,6 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
-
 
 //==========================
 // - Created: FurryMonster
@@ -11,11 +11,19 @@ using UnityEngine;
 //==========================
 public class UnitManager : Singleton<UnitManager>
 {
-    //UnitList
+    //UnitList(shouldn't be able to visit directly,just for setting in editor)
     [SerializeField] private List<UnitInstance> units = new List<UnitInstance>();
+    public List<UnitInstance> Units
+    {
+        get
+        {
+            UpdateUnitVisual();
+            return units;
+        }
+    }
 
     //UnitDict
-    public Dictionary<int, UnitInstance> unitDict = new Dictionary<int, UnitInstance>();
+    private Dictionary<string, UnitInstance> unitDict = new Dictionary<string, UnitInstance>();
 
     //default spawn parent
     [SerializeField] private Transform defaultParent;
@@ -27,7 +35,6 @@ public class UnitManager : Singleton<UnitManager>
         if (defaultParent == null)
         {
             defaultParent = GameObject.Find("Environment").GetComponent<Transform>().Find("_Units");
-            //better set previously
         }
 
     }
@@ -37,25 +44,14 @@ public class UnitManager : Singleton<UnitManager>
     {
         if (HasUnit(unit)) return;
 
-        units.Add(unit);
-        unitDict.Add(unit.unitData.unitName.GetHashCode(), unit);
+        unitDict.Add(unit.unitData.unitName, unit);
     }
 
-    public void RemoveUnit(UnitInstance unit)
+    public void RemoveUnit(string unitID)
     {
-        if (HasUnit(unit))
+        if (HasUnit(unitID))
         {
-            units.Remove(unit);
-            unitDict.Remove(unit.unitData.unitName.GetHashCode());
-        }
-    }
-    public void RemoveUnitById(int id)
-    {
-        if (HasUnit(id))
-        {
-            UnitInstance unit = GetUnitById(id);
-            units.Remove(unit);
-            unitDict.Remove(id);
+            unitDict.Remove(unitID);
         }
     }
 
@@ -63,25 +59,21 @@ public class UnitManager : Singleton<UnitManager>
     {
         if (HasUnit(unit))
         {
-            unitDict[unit.unitData.unitName.GetHashCode()] = unit;
+            unitDict[unit.unitData.unitName] = unit;
         }
     }
 
     public bool HasUnit(UnitInstance unit)
     {
-        return unitDict.ContainsKey(unit.unitData.unitName.GetHashCode());
+        return unitDict.ContainsKey(unit.unitData.unitName);
     }
-    public bool HasUnit(int id)
+    public bool HasUnit(string unitID)
     {
-        return unitDict.ContainsKey(id);
+        return unitDict.ContainsKey(unitID);
     }
-    public UnitInstance GetUnitById(int id)
+    public UnitInstance GetUnit(string unitID)
     {
-        return unitDict[id];
-    }
-    public List<UnitInstance> GetAllUnits()
-    {
-        return units;
+        return unitDict[unitID];
     }
     #endregion
 
@@ -92,66 +84,37 @@ public class UnitManager : Singleton<UnitManager>
         //load unit data from list
         foreach (UnitInstance unit in units)
         {
-            unitDict.Add(unit.unitData.unitName.GetHashCode(), unit);
+            unitDict.Add(unit.unitData.unitName, unit);
         }
         Debug.Log($"{unitDict.Count}/{units.Count} units loaded successfully");
     }
 
-    #region SpawnUnit
-    //spawn units under a parent
-    //You're suggested to pick a parent under folder "Environment/Units"
-    internal void SpawnUnitAtTransform(UnitInstance unit, Transform parent, Vector3 pos, Quaternion rot)
+    #region Spawn
+    internal void SpawnUnit(string unitID,Transform parent,Vector3 pos = default,Quaternion rot = default)
     {
-        GameObject spawnedUnit;
-        spawnedUnit = Instantiate(unit.unitData.unitPrefab, parent);
+        if (unitDict.ContainsKey(unitID))
+        {
+            UnitInstance unit = unitDict[unitID];
+            var instance = Instantiate(unit.unitData.unitPrefab, parent);
 
-        spawnedUnit.transform.position = pos;
-        spawnedUnit.transform.rotation = rot;
-
-        Debug.Log($"spawn a {unit.unitData.unitName} under {parent.name}");
-    }
-    internal void SpawnUnitAtTransform(UnitInstance unit, Transform parent, Vector3 pos)
-    {
-        SpawnUnitAtTransform(unit, parent, pos, Quaternion.identity);
-    }
-    internal void SpawnUnitAtTransform(UnitInstance unit, Transform parent)
-    {
-        SpawnUnitAtTransform(unit, parent, Vector3.zero, Quaternion.identity);
+            instance.transform.position = pos;
+            instance.transform.rotation = rot;
+        }
     }
 
-    //spawn units under default parent
-    //It's better to use these methods
-    internal void SpawnUnit(UnitInstance unit)
+    internal void SpawnUnit(string unitID)
     {
-        SpawnUnitAtTransform(unit, defaultParent);
+        SpawnUnit(unitID, defaultParent);
     }
-    internal void SpawnUnit(UnitInstance unit, Vector3 pos, Quaternion rot)
-    {
-        SpawnUnitAtTransform(unit, defaultParent, pos, rot);
-    }
-    internal void SpawnUnit(UnitInstance unit, Vector3 pos)
-    {
-        SpawnUnitAtTransform(unit, defaultParent, pos);
-    }
-
-    //spawn units at worldspace
-    //Better not use these methods
-    internal void SpawnUnitAtWorldspace(UnitInstance unit, Vector3 pos, Quaternion rot)
-    {
-        Instantiate(unit.unitData.unitPrefab, pos, rot);
-        Debug.Log($"spawn a {unit.unitData.unitName} at {pos}");
-    }
-    internal void SpawnUnitAtWorldspace(UnitInstance unit, Vector3 pos)
-    {
-        SpawnUnitAtWorldspace(unit, pos, Quaternion.identity);
-    }
-    internal void SpawnUnitAtWorldspace(UnitInstance unit)
-    {
-        SpawnUnitAtWorldspace(unit, Vector3.zero, Quaternion.identity);
-    }
-
     #endregion
 
     #endregion
 
+    #region Editor
+    private void UpdateUnitVisual()
+    {
+        units = unitDict.Values.ToList();
+    }
+
+    #endregion
 }

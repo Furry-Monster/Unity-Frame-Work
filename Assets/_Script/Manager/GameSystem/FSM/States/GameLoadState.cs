@@ -59,8 +59,8 @@ public class GameLoadState : GameBaseState
         Singleton<UnitManager>.Instance.AddUnit(playerPrefab.GetComponent<PlayerUnit>().unit);
         Singleton<ItemManager>.Instance.AddItem(stickPrefab.GetComponent<ItemInstanceContainer>().itemInstance);
 
-        Singleton<UnitManager>.Instance.SpawnUnit(Singleton<UnitManager>.Instance.unitDict["Player".GetHashCode()]);
-        Singleton<ItemManager>.Instance.SpawnItem("Stick".GetHashCode());
+        Singleton<UnitManager>.Instance.SpawnUnit("Player");
+        Singleton<ItemManager>.Instance.SpawnItem("Stick");
 
         gameStateMachine.isLoad = true;
     }
