@@ -10,7 +10,7 @@ using UnityEngine;
 //          包括物品的注册（CRUD）、生成、销毁、获取等功能。
 //==========================
 
-public class ItemManager : Singleton<ItemManager>
+public class ItemManager : Singleton<ItemManager>,IManager
 {
     //itemList(shouldn't be able to visit directly,just for setting in editor)
     [SerializeField] private List<ItemInstance> items = new List<ItemInstance>();
@@ -34,11 +34,6 @@ public class ItemManager : Singleton<ItemManager>
     {
         base.Awake();
 
-        //get default parent
-        if (defaultParent == null)
-        {
-            defaultParent = GameObject.Find("Environment").transform.Find("_Items");
-        }
     }
 
     #region CRUD
@@ -85,7 +80,7 @@ public class ItemManager : Singleton<ItemManager>
 
     #region internal
     //init
-    internal void Init()
+    public void Init()
     {
         //load item data from list
         foreach (ItemInstance item in items)
@@ -94,6 +89,15 @@ public class ItemManager : Singleton<ItemManager>
         }
 
         Debug.Log($"{itemDict.Count}/{items.Count} items loaded successfully");
+
+
+        //get default parent
+        if (defaultParent == null)
+        {
+            defaultParent = GameObject.Find("Environment").transform.Find("_Items");
+        }
+
+        Debug.Log("ItemManager initialized successfully");
     }
 
     #region Spawn

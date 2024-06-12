@@ -22,7 +22,7 @@ public enum InputType
     UI
 }
 
-public class InputManager : Singleton<InputManager>
+public class InputManager : Singleton<InputManager>,ISystem
 {
     private InputActions inputActions;
 
@@ -80,6 +80,10 @@ public class InputManager : Singleton<InputManager>
 
     #endregion
 
+    protected override void Awake()
+    {
+        base.Awake();
+    }
 
     private void Update()
     {
@@ -88,7 +92,7 @@ public class InputManager : Singleton<InputManager>
 
     #region Internal Methods
     //init
-    internal void Init()
+    public void Init()
     {
         if (inputActions == null)
         {

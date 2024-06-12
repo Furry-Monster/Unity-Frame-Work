@@ -8,15 +8,15 @@ using UnityEngine;
 //          ∞¸¿®±≥æ∞“Ù¿÷∫Õ“Ù–ß°£
 //==========================
 
-public class AudioManager : Singleton<AudioManager>
+public class AudioManager : Singleton<AudioManager>,IManager
 {
     [SerializeField] private AudioSource soundSource;
     [SerializeField] private AudioSource musicSource;
 
     #region internal
-    internal void Init()
+    public void Init()
     {
-
+        Debug.Log("AudioManager Init");
     }
 
     internal void PlayMusic(AudioClip clip)

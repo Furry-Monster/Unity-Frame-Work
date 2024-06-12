@@ -23,7 +23,7 @@ public class GameManager : Singleton<GameManager>
     }
 
     //kick of the game state machine
-    private void Start() => gameFSM.ChangeState(gameFSM.states[GameState.Initializing]);
+    private void Start() => gameFSM.ChangeState(gameFSM.states[GameState.Load]);
 
     private void Update()
     {

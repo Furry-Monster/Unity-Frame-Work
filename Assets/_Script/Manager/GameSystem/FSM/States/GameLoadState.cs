@@ -53,11 +53,11 @@ public class GameLoadState : GameBaseState
     #region Reusable
     private void LoadResources()
     {
-        GameObject playerPrefab = Singleton<AssetBundleManager>.Instance.LoadAsset<GameObject>("character", "Player");
-        GameObject stickPrefab = Singleton<AssetBundleManager>.Instance.LoadAsset<GameObject>("item", "Stick");
+        //GameObject playerPrefab = Singleton<AssetBundleManager>.Instance.LoadAsset<GameObject>("character", "Player");
+        //GameObject stickPrefab = Singleton<AssetBundleManager>.Instance.LoadAsset<GameObject>("item", "Stick");
 
-        Singleton<UnitManager>.Instance.AddUnit(playerPrefab.GetComponent<PlayerUnit>().unit);
-        Singleton<ItemManager>.Instance.AddItem(stickPrefab.GetComponent<ItemInstanceContainer>().itemInstance);
+        //Singleton<UnitManager>.Instance.AddUnit(playerPrefab.GetComponent<PlayerUnit>().unit);
+        //Singleton<ItemManager>.Instance.AddItem(stickPrefab.GetComponent<ItemInstanceContainer>().itemInstance);
 
         Singleton<UnitManager>.Instance.SpawnUnit("Player");
         Singleton<ItemManager>.Instance.SpawnItem("Stick");

@@ -9,7 +9,7 @@ using UnityEngine;
 //          这个脚本主要是管理单位（包括角色、怪物、实体）的注册和生成，
 //          包括实体的注册（CRUD）、生成、销毁、获取等功能。
 //==========================
-public class UnitManager : Singleton<UnitManager>
+public class UnitManager : Singleton<UnitManager>,IManager
 {
     //UnitList(shouldn't be able to visit directly,just for setting in editor)
     [SerializeField] private List<UnitInstance> units = new List<UnitInstance>();
@@ -31,11 +31,6 @@ public class UnitManager : Singleton<UnitManager>
     protected override void Awake()
     {
         base.Awake();
-
-        if (defaultParent == null)
-        {
-            defaultParent = GameObject.Find("Environment").GetComponent<Transform>().Find("_Units");
-        }
 
     }
 
@@ -79,14 +74,23 @@ public class UnitManager : Singleton<UnitManager>
 
     #region internal
     //init
-    internal void Init()
+    public void Init()
     {
         //load unit data from list
         foreach (UnitInstance unit in units)
         {
             unitDict.Add(unit.unitData.unitName, unit);
         }
+
         Debug.Log($"{unitDict.Count}/{units.Count} units loaded successfully");
+
+
+        if (defaultParent == null)
+        {
+            defaultParent = GameObject.Find("Environment").GetComponent<Transform>().Find("_Units");
+        }
+
+        Debug.Log("UnitManager initialized successfully");
     }
 
     #region Spawn

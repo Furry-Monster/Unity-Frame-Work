@@ -28,14 +28,14 @@ public struct UIInstance
     public GameObject instance;
 }
 
-public class UIManager : Singleton<UIManager>
+public class UIManager : Singleton<UIManager>,IManager
 {
     public Dictionary<UIType, GameObject> uiDict = new Dictionary<UIType, GameObject>();
     [SerializeField] List<UIInstance> uiDictVisual = new List<UIInstance>();
 
     #region internal
     //Init
-    internal void Init()
+    public void Init()
     {
         foreach (UIInstance ui in uiDictVisual)
         {
@@ -43,7 +43,10 @@ public class UIManager : Singleton<UIManager>
         }
 
         Debug.Log($"{uiDict.Count}/{uiDictVisual.Count} UI elements loaded successfully");
+
+        Debug.Log("UIManager initialized successfully");
     }
+
     //Enable
     internal void Enable(UIType type)
     {

@@ -10,7 +10,7 @@ using UnityEngine;
 //          没有采用携程，主要是因为:
 //          Unity的携程仍然是单线程的，如果有大量的定时器需要执行，就会导致游戏的卡顿
 //==========================
-public class TimerSystem : Singleton<TimerSystem>
+public class TimerSystem : Singleton<TimerSystem>,ISystem
 {
     private class TimerNode
     {
@@ -35,7 +35,6 @@ public class TimerSystem : Singleton<TimerSystem>
     {
         base.Awake();
 
-        Init();
     }
 
     private void Update()
@@ -50,8 +49,8 @@ public class TimerSystem : Singleton<TimerSystem>
         IterateTimerToRemoveQueue();
     }
 
-    #region reusable
-    private void Init()
+    #region internal
+    public void Init()
     {
         timerDict = new Dictionary<int, TimerNode>();
         timerToAddQueue = new Queue<TimerNode>();
@@ -59,6 +58,11 @@ public class TimerSystem : Singleton<TimerSystem>
 
         Debug.Log("Timer System initialized successfully");
     }
+
+
+    #endregion
+
+    #region reusable
 
     private int GetNextID()
     {

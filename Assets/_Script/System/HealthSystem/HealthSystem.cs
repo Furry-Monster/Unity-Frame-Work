@@ -1,4 +1,4 @@
-public class HealthSystem : Singleton<HealthSystem>
+public class HealthSystem : Singleton<HealthSystem>,ISystem
 {
     protected override void Awake()
     {
@@ -6,4 +6,12 @@ public class HealthSystem : Singleton<HealthSystem>
 
 
     }
+
+    #region internal
+    public void Init()
+    {
+
+    }
+
+    #endregion
 }

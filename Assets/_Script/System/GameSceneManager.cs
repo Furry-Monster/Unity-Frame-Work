@@ -15,7 +15,7 @@ using UnityEngine.SceneManagement;
 //==========================
 
 
-public class GameSceneManager : Singleton<GameSceneManager>
+public class GameSceneManager : Singleton<GameSceneManager>,ISystem
 {
     //stack to store the Scene loaded(not include current scene,I regard currentScene as applied scene)
     //thus my stack should organized like this:
@@ -28,8 +28,13 @@ public class GameSceneManager : Singleton<GameSceneManager>
 
     private AsyncOperation nextSceneLoadRequest;
 
+    protected override void Awake()
+    {
+        base.Awake();
+    }
+
     #region internal
-    internal void Init()
+    public void Init()
     {
         //register event
         SceneManager.sceneLoaded += OnSceneLoaded;

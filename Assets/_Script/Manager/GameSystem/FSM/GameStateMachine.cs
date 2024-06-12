@@ -8,8 +8,7 @@ using System.Collections.Generic;
 [Serializable]
 public enum GameState
 {
-    Initializing, //please distinguish between loading and initializing,this is for init systems,only load once.
-    Load,      // this is for loading assets, could load for many times
+    Load,      // not including load asset,only load the game scene and set the player's position
     Start,     // player enter timeline or something like that
     Play,
     Paused,
@@ -32,7 +31,6 @@ public class GameStateMachine : BaseStateMachine
 
     protected override void Init()
     {
-        states.Add(GameState.Initializing, new GameInitializingState(this));
         states.Add(GameState.Load, new GameLoadState(this));
         states.Add(GameState.Start, new GameStartState(this));
         states.Add(GameState.Play, new GamePlayState(this));
@@ -43,8 +41,6 @@ public class GameStateMachine : BaseStateMachine
     #endregion
 
     #region parameters
-    public bool isInit = false;
-
     public bool isLoad = false;
     #endregion
 }
